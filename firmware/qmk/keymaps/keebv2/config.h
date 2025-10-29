@@ -1,0 +1,34 @@
+#pragma once
+
+// Split transport (Pro Micro + TRRS)
+#define SOFT_SERIAL_PIN D2
+#define MASTER_LEFT
+#define SPLIT_LAYER_STATE_ENABLE
+#define SPLIT_MODS_ENABLE
+#define SPLIT_LED_STATE_ENABLE
+
+// OLED configuration
+#define OLED_TIMEOUT 60000        // 60s inactivity -> off
+#define OLED_BRIGHTNESS 90
+#define OLED_UPDATE_INTERVAL 100
+
+#ifdef RGB_MATRIX_ENABLE
+#    ifdef RGB_MATRIX_MAXIMUM_BRIGHTNESS
+#        undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
+#    endif
+#    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 110
+#    define RGB_DISABLE_WHEN_USB_SUSPENDED true
+
+#    define ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
+#    define ENABLE_RGB_MATRIX_CYCLE_ALL
+#    define ENABLE_RGB_MATRIX_BREATHING
+#    define ENABLE_RGB_MATRIX_BAND_SAT
+#    define ENABLE_RGB_MATRIX_PIXEL_FRACTAL
+#    define ENABLE_RGB_MATRIX_TYPING_HEATMAP
+
+#    define RGB_MATRIX_SLEEP
+#    define RGB_MATRIX_TIMEOUT 600000  // 10 minutes inactivity -> off
+#    define SPLIT_ACTIVITY_ENABLE
+#    define SPLIT_OLED_ENABLE
+#endif
+
