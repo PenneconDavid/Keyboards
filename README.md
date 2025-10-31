@@ -22,3 +22,4 @@ Personal staging area for split keyboard firmware, layouts, and flashing notes.
 - Keep `qmk_firmware` up to date (`git pull upstream master`) so you receive split keyboard fixes and RGB/OLED improvements.
 - Store every VIA export you care about in `layouts/` before experimenting, so you can diff changes against version control.
 - When experimenting with new effects or hardware, branch the repo (e.g. `git checkout -b feature/oled-experiments`) to keep shipping firmware pristine.
+  

@@ -1,5 +1,6 @@
 VIA_ENABLE = yes
 OLED_ENABLE = yes
+SPACE_CADET_ENABLE = yes
 
 # Per-key RGB (do NOT enable RGBLIGHT simultaneously)
 RGBLIGHT_ENABLE = no
