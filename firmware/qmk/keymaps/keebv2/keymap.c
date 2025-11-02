@@ -1,24 +1,5 @@
 #include QMK_KEYBOARD_H
 
-// --------------------------- USER CONFIG ---------------------------
-// Daisy OLED art toggle
-#define OLED_SHOW_DAISY 1
-// VIA owns RGB Matrix animations; set to 1 to force a brief test pattern.
-#define RGB_DIAG_FORCE 0
-
-// Portrait panels usually like 90°; if yours are sideways, change both to 270°.
-#define ROT_LEFT 90
-#define ROT_RIGHT 90
-
-// Daisy shape controls (safe defaults for 32px wide portrait displays)
-#define DAISY_R_CENTER 5
-#define DAISY_RX_PETAL 7
-#define DAISY_RY_PETAL 9
-#define DAISY_OFF_X 8
-#define DAISY_OFF_Y 14
-#define DAISY_MARGIN 2
-// -------------------------------------------------------------------
-
 enum custom_layers {
     _BASE = 0,
     _SYM,
@@ -79,6 +60,8 @@ void keyboard_post_init_user(void) {
     rgb_matrix_sethsv_noeeprom(128, 255, 160);
 #else
     rgb_matrix_enable_noeeprom(); // Let VIA manage effects
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_STARTUP_MODE);
+    rgb_matrix_sethsv_noeeprom(RGB_MATRIX_STARTUP_HUE, RGB_MATRIX_STARTUP_SAT, RGB_MATRIX_STARTUP_VAL);
 #endif
 }
 #endif
@@ -103,12 +86,32 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return is_keyboard_master() ? rot_from_deg(ROT_LEFT) : rot_from_deg(ROT_RIGHT);
 }
 
-static inline void get_rotated_dims(uint8_t *rw, uint8_t *rh) {
+static inline void get_rotated_dims_for_side(bool is_master, uint8_t *rw, uint8_t *rh) {
     const uint8_t base_w = OLED_DISPLAY_WIDTH;
     const uint8_t base_h = OLED_DISPLAY_HEIGHT;
-    const bool rot90or270 = ((ROT_LEFT % 180) != 0);
+    const uint16_t deg = is_master ? ROT_LEFT : ROT_RIGHT;
+    const bool rot90or270 = ((deg % 180) != 0);
     *rw = rot90or270 ? base_h : base_w;
     *rh = rot90or270 ? base_w : base_h;
+}
+
+static inline void write_pixel_safe(uint8_t w, uint8_t h, int16_t x, int16_t y, bool on) {
+    if (x >= 0 && x < w && y >= 0 && y < h) {
+        oled_write_pixel((uint8_t)x, (uint8_t)y, on);
+    }
+}
+
+static void draw_rect_outline(uint8_t w, uint8_t h, int16_t left, int16_t top, int16_t right, int16_t bottom, uint8_t thickness) {
+    for (uint8_t t = 0; t < thickness; t++) {
+        for (int16_t x = left + t; x <= right - t; x++) {
+            write_pixel_safe(w, h, x, top + t, true);
+            write_pixel_safe(w, h, x, bottom - t, true);
+        }
+        for (int16_t y = top + t; y <= bottom - t; y++) {
+            write_pixel_safe(w, h, left + t, y, true);
+            write_pixel_safe(w, h, right - t, y, true);
+        }
+    }
 }
 
 static inline bool in_circle(int16_t x, int16_t y, int16_t cx, int16_t cy, int16_t r) {
@@ -123,9 +126,9 @@ static inline bool in_ellipse(int16_t x, int16_t y, int16_t cx, int16_t cy, int1
     return (SQI(dx) * SQI(ry) + SQI(dy) * SQI(rx) <= SQI(rx) * SQI(ry));
 }
 
-static void draw_daisy_overlap(void) {
+static void draw_daisy_overlap(bool is_master) {
     uint8_t w, h;
-    get_rotated_dims(&w, &h);
+    get_rotated_dims_for_side(is_master, &w, &h);
     const int16_t cx = w / 2;
     const int16_t cy = h / 2;
 
@@ -151,59 +154,118 @@ static void draw_daisy_overlap(void) {
             if (!on && in_ellipse(x, y, cx,        cy - offy, rxP, ryP)) on = true;
 
             if (on) {
-                oled_write_pixel((uint8_t)x, (uint8_t)y, true);
+                write_pixel_safe(w, h, x, y, true);
             }
         }
     }
 }
 
-#if OLED_SHOW_DAISY
-bool oled_task_user(void) {
-    static bool left_done = false;
-    static bool right_done = false;
-    if (is_keyboard_master()) {
-        if (!left_done) {
-            draw_daisy_overlap();
-            left_done = true;
-        }
-    } else {
-        if (!right_done) {
-            draw_daisy_overlap();
-            right_done = true;
-        }
-    }
-    return false;
-}
-#else
-static void draw_rotaware_grid(void) {
+static void draw_rotaware_grid(bool is_master) {
     uint8_t w, h;
-    get_rotated_dims(&w, &h);
+    get_rotated_dims_for_side(is_master, &w, &h);
     oled_clear();
     for (uint8_t y = 0; y < h; y++) {
         bool hline = (y == 0) || (y == h - 1) || (y % 8 == 0);
         for (uint8_t x = 0; x < w; x++) {
             bool vline = (x == 0) || (x == w - 1) || (x % 8 == 0);
             if (hline || vline) {
-                oled_write_pixel(x, y, true);
+                write_pixel_safe(w, h, x, y, true);
             }
         }
+    }
+}
+
+static void draw_qmk_logo(bool is_master) {
+    uint8_t w, h;
+    get_rotated_dims_for_side(is_master, &w, &h);
+    oled_clear();
+
+    draw_rect_outline(w, h, 2, 6, w - 3, h - 7, 1);
+
+    int16_t q_left = 5;
+    int16_t q_right = w - 6;
+    int16_t q_top = 10;
+    int16_t q_bottom = q_top + 24;
+    draw_rect_outline(w, h, q_left, q_top, q_right, q_bottom, 2);
+    for (uint8_t t = 0; t < 4; t++) {
+        write_pixel_safe(w, h, q_right - 3 + t, q_bottom - 2 + t, true);
+        if (t < 3) {
+            write_pixel_safe(w, h, q_right - 4 + t, q_bottom - 3 + t, true);
+        }
+    }
+
+    int16_t m_top = q_bottom + 8;
+    int16_t m_bottom = m_top + 28;
+    int16_t m_left = q_left;
+    int16_t m_right = q_right;
+    for (int16_t y = m_top; y <= m_bottom; y++) {
+        for (uint8_t t = 0; t < 2; t++) {
+            write_pixel_safe(w, h, m_left + t, y, true);
+            write_pixel_safe(w, h, m_right - t, y, true);
+        }
+    }
+    int16_t diag_height = (m_bottom - m_top) / 2;
+    for (int16_t y = 0; y <= diag_height; y++) {
+        int16_t y_abs = m_top + y;
+        int16_t offset = y / 2;
+        for (uint8_t t = 0; t < 2; t++) {
+            write_pixel_safe(w, h, m_left + offset + t, y_abs, true);
+            write_pixel_safe(w, h, m_right - offset - t, y_abs, true);
+        }
+    }
+
+    int16_t k_top = m_bottom + 8;
+    int16_t k_bottom = h - 12;
+    int16_t k_left = q_left;
+    for (int16_t y = k_top; y <= k_bottom; y++) {
+        for (uint8_t t = 0; t < 2; t++) {
+            write_pixel_safe(w, h, k_left + t, y, true);
+        }
+    }
+    int16_t center = (k_top + k_bottom) / 2;
+    for (int16_t y = 0; y <= (center - k_top); y++) {
+        int16_t y_abs = center - y;
+        int16_t x = k_left + 5 + y / 2;
+        for (uint8_t t = 0; t < 2; t++) {
+            write_pixel_safe(w, h, x + t, y_abs, true);
+        }
+    }
+    for (int16_t y = 0; y <= (k_bottom - center); y++) {
+        int16_t y_abs = center + y;
+        int16_t x = k_left + 5 + y / 2;
+        for (uint8_t t = 0; t < 2; t++) {
+            write_pixel_safe(w, h, x + t, y_abs, true);
+        }
+    }
+
+    for (int16_t x = q_left; x <= q_right; x += 4) {
+        write_pixel_safe(w, h, x, h - 10, true);
+        write_pixel_safe(w, h, x + 1, h - 11, true);
     }
 }
 
 bool oled_task_user(void) {
     static bool left_done = false;
     static bool right_done = false;
-    if (is_keyboard_master()) {
-        if (!left_done) {
-            draw_rotaware_grid();
-            left_done = true;
+    const bool is_master = is_keyboard_master();
+    bool *done_flag = is_master ? &left_done : &right_done;
+
+    if (!*done_flag) {
+        const uint8_t mode = is_master ? OLED_LEFT_MODE : OLED_RIGHT_MODE;
+        switch (mode) {
+            case OLED_MODE_DAISY:
+                draw_daisy_overlap(is_master);
+                break;
+            case OLED_MODE_QMK:
+                draw_qmk_logo(is_master);
+                break;
+            default:
+                draw_rotaware_grid(is_master);
+                break;
         }
-    } else {
-        if (!right_done) {
-            draw_rotaware_grid();
-            right_done = true;
-        }
+        *done_flag = true;
     }
+
     return false;
 }
 
@@ -220,7 +282,6 @@ void suspend_wakeup_init_user(void) {
 #    endif
     oled_on();
 }
-#endif // OLED_SHOW_DAISY
 
 #endif // OLED_ENABLE
 
