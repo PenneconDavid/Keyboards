@@ -95,21 +95,25 @@ static inline void get_rotated_dims_for_side(bool is_master, uint8_t *rw, uint8_
     *rh = rot90or270 ? base_w : base_h;
 }
 
-static inline void write_pixel_safe(uint8_t w, uint8_t h, int16_t x, int16_t y, bool on) {
+static inline void write_pixel_safe(uint8_t w, uint8_t h, int16_t x, int16_t y, bool on, bool flip) {
+    if (flip) {
+        x = (int16_t)(w - 1 - x);
+        y = (int16_t)(h - 1 - y);
+    }
     if (x >= 0 && x < w && y >= 0 && y < h) {
         oled_write_pixel((uint8_t)x, (uint8_t)y, on);
     }
 }
 
-static void draw_rect_outline(uint8_t w, uint8_t h, int16_t left, int16_t top, int16_t right, int16_t bottom, uint8_t thickness) {
+static void draw_rect_outline(uint8_t w, uint8_t h, int16_t left, int16_t top, int16_t right, int16_t bottom, uint8_t thickness, bool flip) {
     for (uint8_t t = 0; t < thickness; t++) {
         for (int16_t x = left + t; x <= right - t; x++) {
-            write_pixel_safe(w, h, x, top + t, true);
-            write_pixel_safe(w, h, x, bottom - t, true);
+            write_pixel_safe(w, h, x, top + t, true, flip);
+            write_pixel_safe(w, h, x, bottom - t, true, flip);
         }
         for (int16_t y = top + t; y <= bottom - t; y++) {
-            write_pixel_safe(w, h, left + t, y, true);
-            write_pixel_safe(w, h, right - t, y, true);
+            write_pixel_safe(w, h, left + t, y, true, flip);
+            write_pixel_safe(w, h, right - t, y, true, flip);
         }
     }
 }
@@ -126,7 +130,7 @@ static inline bool in_ellipse(int16_t x, int16_t y, int16_t cx, int16_t cy, int1
     return (SQI(dx) * SQI(ry) + SQI(dy) * SQI(rx) <= SQI(rx) * SQI(ry));
 }
 
-static void draw_daisy_overlap(bool is_master) {
+static void draw_daisy_overlap(bool is_master, bool flip) {
     uint8_t w, h;
     get_rotated_dims_for_side(is_master, &w, &h);
     const int16_t cx = w / 2;
@@ -154,13 +158,13 @@ static void draw_daisy_overlap(bool is_master) {
             if (!on && in_ellipse(x, y, cx,        cy - offy, rxP, ryP)) on = true;
 
             if (on) {
-                write_pixel_safe(w, h, x, y, true);
+                write_pixel_safe(w, h, x, y, true, flip);
             }
         }
     }
 }
 
-static void draw_rotaware_grid(bool is_master) {
+static void draw_rotaware_grid(bool is_master, bool flip) {
     uint8_t w, h;
     get_rotated_dims_for_side(is_master, &w, &h);
     oled_clear();
@@ -169,28 +173,28 @@ static void draw_rotaware_grid(bool is_master) {
         for (uint8_t x = 0; x < w; x++) {
             bool vline = (x == 0) || (x == w - 1) || (x % 8 == 0);
             if (hline || vline) {
-                write_pixel_safe(w, h, x, y, true);
+                write_pixel_safe(w, h, x, y, true, flip);
             }
         }
     }
 }
 
-static void draw_qmk_logo(bool is_master) {
+static void draw_qmk_logo(bool is_master, bool flip) {
     uint8_t w, h;
     get_rotated_dims_for_side(is_master, &w, &h);
     oled_clear();
 
-    draw_rect_outline(w, h, 2, 6, w - 3, h - 7, 1);
+    draw_rect_outline(w, h, 2, 6, w - 3, h - 7, 1, flip);
 
     int16_t q_left = 5;
     int16_t q_right = w - 6;
     int16_t q_top = 10;
     int16_t q_bottom = q_top + 24;
-    draw_rect_outline(w, h, q_left, q_top, q_right, q_bottom, 2);
+    draw_rect_outline(w, h, q_left, q_top, q_right, q_bottom, 2, flip);
     for (uint8_t t = 0; t < 4; t++) {
-        write_pixel_safe(w, h, q_right - 3 + t, q_bottom - 2 + t, true);
+        write_pixel_safe(w, h, q_right - 3 + t, q_bottom - 2 + t, true, flip);
         if (t < 3) {
-            write_pixel_safe(w, h, q_right - 4 + t, q_bottom - 3 + t, true);
+            write_pixel_safe(w, h, q_right - 4 + t, q_bottom - 3 + t, true, flip);
         }
     }
 
@@ -200,8 +204,8 @@ static void draw_qmk_logo(bool is_master) {
     int16_t m_right = q_right;
     for (int16_t y = m_top; y <= m_bottom; y++) {
         for (uint8_t t = 0; t < 2; t++) {
-            write_pixel_safe(w, h, m_left + t, y, true);
-            write_pixel_safe(w, h, m_right - t, y, true);
+            write_pixel_safe(w, h, m_left + t, y, true, flip);
+            write_pixel_safe(w, h, m_right - t, y, true, flip);
         }
     }
     int16_t diag_height = (m_bottom - m_top) / 2;
@@ -209,8 +213,8 @@ static void draw_qmk_logo(bool is_master) {
         int16_t y_abs = m_top + y;
         int16_t offset = y / 2;
         for (uint8_t t = 0; t < 2; t++) {
-            write_pixel_safe(w, h, m_left + offset + t, y_abs, true);
-            write_pixel_safe(w, h, m_right - offset - t, y_abs, true);
+            write_pixel_safe(w, h, m_left + offset + t, y_abs, true, flip);
+            write_pixel_safe(w, h, m_right - offset - t, y_abs, true, flip);
         }
     }
 
@@ -219,7 +223,7 @@ static void draw_qmk_logo(bool is_master) {
     int16_t k_left = q_left;
     for (int16_t y = k_top; y <= k_bottom; y++) {
         for (uint8_t t = 0; t < 2; t++) {
-            write_pixel_safe(w, h, k_left + t, y, true);
+            write_pixel_safe(w, h, k_left + t, y, true, flip);
         }
     }
     int16_t center = (k_top + k_bottom) / 2;
@@ -227,40 +231,121 @@ static void draw_qmk_logo(bool is_master) {
         int16_t y_abs = center - y;
         int16_t x = k_left + 5 + y / 2;
         for (uint8_t t = 0; t < 2; t++) {
-            write_pixel_safe(w, h, x + t, y_abs, true);
+            write_pixel_safe(w, h, x + t, y_abs, true, flip);
         }
     }
     for (int16_t y = 0; y <= (k_bottom - center); y++) {
         int16_t y_abs = center + y;
         int16_t x = k_left + 5 + y / 2;
         for (uint8_t t = 0; t < 2; t++) {
-            write_pixel_safe(w, h, x + t, y_abs, true);
+            write_pixel_safe(w, h, x + t, y_abs, true, flip);
+        write_pixel_safe(w, h, x + t, y_abs, true, flip);
         }
     }
 
     for (int16_t x = q_left; x <= q_right; x += 4) {
-        write_pixel_safe(w, h, x, h - 10, true);
-        write_pixel_safe(w, h, x + 1, h - 11, true);
+        write_pixel_safe(w, h, x, h - 10, true, flip);
+        write_pixel_safe(w, h, x + 1, h - 11, true, flip);
     }
+}
+
+static inline void fill_rect(uint8_t w, uint8_t h, int16_t left, int16_t top, int16_t right, int16_t bottom, bool flip) {
+    if (left > right) {
+        int16_t tmp = left; left = right; right = tmp;
+    }
+    if (top > bottom) {
+        int16_t tmp = top; top = bottom; bottom = tmp;
+    }
+    for (int16_t y = top; y <= bottom; y++) {
+        for (int16_t x = left; x <= right; x++) {
+            write_pixel_safe(w, h, x, y, true, flip);
+        }
+    }
+}
+
+static void draw_letter_D(uint8_t w, uint8_t h, int16_t left, int16_t top, int16_t width, int16_t height, uint8_t stroke, bool flip) {
+    int16_t right = left + width;
+    int16_t bottom = top + height;
+    fill_rect(w, h, left, top, left + stroke - 1, bottom, flip);
+    fill_rect(w, h, left + stroke, top, right - stroke, top + stroke - 1, flip);
+    fill_rect(w, h, left + stroke, bottom - stroke + 1, right - stroke, bottom, flip);
+    fill_rect(w, h, right - stroke, top + stroke, right, bottom - stroke, flip);
+}
+
+static void draw_letter_A(uint8_t w, uint8_t h, int16_t left, int16_t top, int16_t width, int16_t height, uint8_t stroke, bool flip) {
+    int16_t right = left + width;
+    for (int16_t y = 0; y <= height; y++) {
+        int16_t offset = (int16_t)((int32_t)y * (width / 2)) / (height ? height : 1);
+        fill_rect(w, h, left + offset, top + y, left + offset + stroke - 1, top + y + stroke - 1, flip);
+        fill_rect(w, h, right - offset - stroke + 1, top + y, right - offset, top + y + stroke - 1, flip);
+    }
+    fill_rect(w, h, left + stroke, top + height / 2, right - stroke, top + height / 2 + stroke - 1, flip);
+}
+
+static void draw_letter_V(uint8_t w, uint8_t h, int16_t left, int16_t top, int16_t width, int16_t height, uint8_t stroke, bool flip) {
+    int16_t right = left + width;
+    for (int16_t y = 0; y <= height; y++) {
+        int16_t offset = (int16_t)((int32_t)y * (width / 2)) / (height ? height : 1);
+        fill_rect(w, h, left + offset, top + y, left + offset + stroke - 1, top + y + stroke - 1, flip);
+        fill_rect(w, h, right - offset - stroke + 1, top + y, right - offset, top + y + stroke - 1, flip);
+    }
+}
+
+static void draw_letter_I(uint8_t w, uint8_t h, int16_t left, int16_t top, int16_t width, int16_t height, uint8_t stroke, bool flip) {
+    int16_t right = left + width;
+    int16_t bottom = top + height;
+    int16_t center_left = left + (width / 2) - (stroke / 2);
+    int16_t center_right = center_left + stroke - 1;
+    fill_rect(w, h, left, top, right, top + stroke - 1, flip);
+    fill_rect(w, h, center_left, top, center_right, bottom, flip);
+    fill_rect(w, h, left, bottom - stroke + 1, right, bottom, flip);
+}
+
+static void draw_david_logo(bool is_master, bool flip) {
+    uint8_t w, h;
+    get_rotated_dims_for_side(is_master, &w, &h);
+    oled_clear();
+    const int16_t margin = 4;
+    const int16_t width = w - (margin * 2) - 2;
+    const int16_t letter_height = 18;
+    const uint8_t stroke = 3;
+    const int16_t spacing = 4;
+
+    int16_t left = margin + 1;
+    int16_t top = 6;
+
+    draw_letter_D(w, h, left, top, width, letter_height, stroke, flip);
+    top += letter_height + spacing;
+    draw_letter_A(w, h, left, top, width, letter_height, stroke, flip);
+    top += letter_height + spacing;
+    draw_letter_V(w, h, left, top, width, letter_height, stroke, flip);
+    top += letter_height + spacing;
+    draw_letter_I(w, h, left, top, width, letter_height, stroke, flip);
+    top += letter_height + spacing;
+    draw_letter_D(w, h, left, top, width, letter_height, stroke, flip);
 }
 
 bool oled_task_user(void) {
     static bool left_done = false;
     static bool right_done = false;
     const bool is_master = is_keyboard_master();
+    const bool flip = is_master ? OLED_LEFT_FLIP : OLED_RIGHT_FLIP;
     bool *done_flag = is_master ? &left_done : &right_done;
 
     if (!*done_flag) {
         const uint8_t mode = is_master ? OLED_LEFT_MODE : OLED_RIGHT_MODE;
         switch (mode) {
             case OLED_MODE_DAISY:
-                draw_daisy_overlap(is_master);
+                draw_daisy_overlap(is_master, flip);
                 break;
             case OLED_MODE_QMK:
-                draw_qmk_logo(is_master);
+                draw_qmk_logo(is_master, flip);
+                break;
+            case OLED_MODE_DAVID:
+                draw_david_logo(is_master, flip);
                 break;
             default:
-                draw_rotaware_grid(is_master);
+                draw_rotaware_grid(is_master, flip);
                 break;
         }
         *done_flag = true;

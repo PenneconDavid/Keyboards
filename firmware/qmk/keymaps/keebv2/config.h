@@ -36,6 +36,7 @@
 #define OLED_MODE_GRID 0
 #define OLED_MODE_DAISY 1
 #define OLED_MODE_QMK 2
+#define OLED_MODE_DAVID 3
 
 #ifndef RGB_DIAG_FORCE
 #    define RGB_DIAG_FORCE 0
@@ -73,13 +74,17 @@
 #    define DAISY_MARGIN 2
 #endif
 
-#ifndef OLED_LEFT_MODE
-#    define OLED_LEFT_MODE OLED_MODE_QMK
-#endif
+#undef OLED_LEFT_MODE
+#define OLED_LEFT_MODE OLED_MODE_QMK
 
-#ifndef OLED_RIGHT_MODE
-#    define OLED_RIGHT_MODE OLED_MODE_DAISY
-#endif
+#undef OLED_RIGHT_MODE
+#define OLED_RIGHT_MODE OLED_MODE_DAVID
+
+#undef OLED_LEFT_FLIP
+#define OLED_LEFT_FLIP true
+
+#undef OLED_RIGHT_FLIP
+#define OLED_RIGHT_FLIP false
 
 #ifndef RGB_MATRIX_STARTUP_MODE
 #    define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_CYCLE_ALL
