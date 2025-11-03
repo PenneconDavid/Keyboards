@@ -73,6 +73,8 @@ void keyboard_post_init_user(void) {
 #define MINI(a,b) ((a) < (b) ? (a) : (b))
 #define MAXI(a,b) ((a) > (b) ? (a) : (b))
 
+#define LAYER_PULSE_STEPS 12
+
 static inline oled_rotation_t rot_from_deg(uint16_t d) {
     switch (d) {
         case 0:   return OLED_ROTATION_0;
@@ -276,6 +278,112 @@ static inline void fill_rect(uint8_t w, uint8_t h, int16_t left, int16_t top, in
     }
 }
 
+static void draw_layer_icon_base(uint8_t w, uint8_t h, int16_t top, int16_t bottom, bool emphasize, bool flip) {
+    const int16_t left = 4;
+    const int16_t right = w - 5;
+    const uint8_t frame_thickness = emphasize ? 2 : 1;
+    draw_rect_outline(w, h, left, top, right, bottom, frame_thickness, flip);
+
+    const int16_t key_left = left + 3;
+    const int16_t key_width = 3;
+    const int16_t key_height = emphasize ? 6 : 5;
+    const int16_t key_gap_x = 2;
+    const int16_t key_gap_y = 4;
+    for (uint8_t row = 0; row < 3; row++) {
+        int16_t row_top = top + 4 + (int16_t)row * (key_height + key_gap_y);
+        for (uint8_t col = 0; col < 4; col++) {
+            int16_t col_left = key_left + (int16_t)col * (key_width + key_gap_x);
+            fill_rect(w, h, col_left, row_top, col_left + key_width - 1, row_top + key_height - 1, flip);
+        }
+    }
+
+    if (emphasize) {
+        fill_rect(w, h, left + 2, bottom - 6, right - 2, bottom - 3, flip);
+    }
+}
+
+static void draw_layer_icon_symbols(uint8_t w, uint8_t h, int16_t top, int16_t bottom, bool emphasize, bool flip) {
+    const int16_t cx = w / 2;
+    const int16_t cy = (top + bottom) / 2;
+    const int16_t arm_len = (bottom - top) / 2 - 4;
+
+    fill_rect(w, h, cx - 1, cy - arm_len, cx + 1, cy + arm_len, flip);
+    fill_rect(w, h, 3, cy - 1, w - 4, cy + 1, flip);
+
+    if (emphasize) {
+        for (int16_t d = 0; d <= arm_len; d++) {
+            write_pixel_safe(w, h, cx + d / 2, cy + d, true, flip);
+            write_pixel_safe(w, h, cx - d / 2, cy + d, true, flip);
+            write_pixel_safe(w, h, cx + d / 2, cy - d, true, flip);
+            write_pixel_safe(w, h, cx - d / 2, cy - d, true, flip);
+        }
+    }
+}
+
+static void draw_layer_icon_nav(uint8_t w, uint8_t h, int16_t top, int16_t bottom, bool emphasize, bool flip) {
+    const int16_t cx = w / 2;
+    const int16_t head_height = 18;
+    const int16_t shaft_top = top + head_height;
+    const int16_t shaft_bottom = bottom - 12;
+
+    fill_rect(w, h, cx - 2, shaft_top, cx + 2, shaft_bottom, flip);
+    for (int16_t offset = 0; offset < head_height; offset++) {
+        int16_t width = emphasize ? (offset / 3) + 3 : (offset / 4) + 2;
+        fill_rect(w, h, cx - width, shaft_top - offset, cx + width, shaft_top - offset, flip);
+    }
+
+    if (emphasize) {
+        fill_rect(w, h, cx - 8, shaft_bottom + 3, cx - 3, shaft_bottom + 6, flip);
+        fill_rect(w, h, cx + 3, shaft_bottom + 3, cx + 8, shaft_bottom + 6, flip);
+    }
+}
+
+static void draw_layer_icon_fn(uint8_t w, uint8_t h, int16_t top, int16_t bottom, bool emphasize, bool flip) {
+    const int16_t left = 6;
+    const int16_t right = w - 6;
+    const int16_t stroke = emphasize ? 4 : 3;
+
+    fill_rect(w, h, left, top, left + stroke - 1, bottom, flip);
+    fill_rect(w, h, left + stroke, top, right, top + stroke - 1, flip);
+    fill_rect(w, h, left + stroke, (top + bottom) / 2, right - (emphasize ? 1 : 2), (top + bottom) / 2 + stroke - 1, flip);
+
+    if (emphasize) {
+        fill_rect(w, h, right - 4, top + stroke, right - 1, (top + bottom) / 2 - 2, flip);
+    }
+}
+
+static void draw_layer_pulse_frame(bool is_master, uint8_t layer, uint8_t phase, bool flip) {
+    uint8_t w, h;
+    get_rotated_dims_for_side(is_master, &w, &h);
+    oled_clear();
+
+    const int16_t icon_top = 16;
+    const int16_t icon_bottom = h - 20;
+
+    const uint8_t half = LAYER_PULSE_STEPS / 2;
+    uint8_t idx = phase % LAYER_PULSE_STEPS;
+    uint8_t distance = (idx <= half) ? idx : (LAYER_PULSE_STEPS - idx);
+    bool emphasize = (distance >= (half / 2));
+
+    switch (layer) {
+        case _BASE:
+            draw_layer_icon_base(w, h, icon_top, icon_bottom, emphasize, flip);
+            break;
+        case _SYM:
+            draw_layer_icon_symbols(w, h, icon_top, icon_bottom, emphasize, flip);
+            break;
+        case _NAV:
+            draw_layer_icon_nav(w, h, icon_top, icon_bottom, emphasize, flip);
+            break;
+        case _FN:
+            draw_layer_icon_fn(w, h, icon_top, icon_bottom, emphasize, flip);
+            break;
+        default:
+            draw_rotaware_grid(is_master, flip);
+            break;
+    }
+}
+
 static void draw_letter_D(uint8_t w, uint8_t h, int16_t left, int16_t top, int16_t width, int16_t height, uint8_t stroke, bool flip) {
     int16_t right = left + width;
     int16_t bottom = top + height;
@@ -338,30 +446,79 @@ static void draw_david_logo(bool is_master, bool flip) {
     draw_letter_D(w, h, left, top, width, letter_height, stroke, flip);
 }
 
+static void draw_static_mode(bool is_master, uint8_t mode, bool flip) {
+    switch (mode) {
+        case OLED_MODE_DAISY:
+            draw_daisy_overlap(is_master, flip);
+            break;
+        case OLED_MODE_QMK:
+            draw_qmk_logo(is_master, flip);
+            break;
+        case OLED_MODE_DAVID:
+            draw_david_logo(is_master, flip);
+            break;
+        default:
+            draw_rotaware_grid(is_master, flip);
+            break;
+    }
+}
+
 bool oled_task_user(void) {
-    static bool left_done = false;
-    static bool right_done = false;
     const bool is_master = is_keyboard_master();
     const bool flip = is_master ? OLED_LEFT_FLIP : OLED_RIGHT_FLIP;
-    bool *done_flag = is_master ? &left_done : &right_done;
+    static uint32_t left_last_frame = 0;
+    static uint8_t left_phase = 0;
+    static uint8_t left_cached_layer = 0;
+    static bool left_initialized = false;
+    static uint8_t left_last_static_mode = 0xFF;
+    static uint8_t right_last_mode = 0xFF;
 
-    if (!*done_flag) {
-        const uint8_t mode = is_master ? OLED_LEFT_MODE : OLED_RIGHT_MODE;
-        switch (mode) {
-            case OLED_MODE_DAISY:
-                draw_daisy_overlap(is_master, flip);
-                break;
-            case OLED_MODE_QMK:
-                draw_qmk_logo(is_master, flip);
-                break;
-            case OLED_MODE_DAVID:
-                draw_david_logo(is_master, flip);
-                break;
-            default:
-                draw_rotaware_grid(is_master, flip);
-                break;
+    if (is_master) {
+        const uint8_t mode = OLED_LEFT_MODE;
+        if (mode == OLED_MODE_QMK) {
+            layer_state_t current_state = layer_state | default_layer_state;
+            uint8_t active_layer = get_highest_layer(current_state);
+            uint32_t now = timer_read32();
+            bool needs_redraw = false;
+
+            if (!left_initialized) {
+                left_initialized = true;
+                left_cached_layer = active_layer;
+                left_last_frame = now;
+                left_phase = 0;
+                needs_redraw = true;
+            }
+
+            if (active_layer != left_cached_layer) {
+                left_cached_layer = active_layer;
+                left_phase = 0;
+                needs_redraw = true;
+            }
+
+            if ((uint32_t)(now - left_last_frame) >= 120) {
+                left_last_frame = now;
+                left_phase = (left_phase + 1) % LAYER_PULSE_STEPS;
+                needs_redraw = true;
+            }
+
+            if (needs_redraw) {
+                draw_layer_pulse_frame(true, active_layer, left_phase, flip);
+            }
+
+            left_last_static_mode = 0xFF;
+        } else {
+            left_initialized = false;
+            if (left_last_static_mode != mode) {
+                draw_static_mode(true, mode, flip);
+                left_last_static_mode = mode;
+            }
         }
-        *done_flag = true;
+    } else {
+        const uint8_t mode = OLED_RIGHT_MODE;
+        if (right_last_mode != mode) {
+            draw_static_mode(false, mode, flip);
+            right_last_mode = mode;
+        }
     }
 
     return false;
