@@ -82,8 +82,21 @@ static inline oled_rotation_t rot_from_deg(uint16_t d) {
     }
 }
 
+static inline uint16_t deg_from_rot(oled_rotation_t r) {
+    switch (r) {
+        case OLED_ROTATION_0:   return 0;
+        case OLED_ROTATION_90:  return 90;
+        case OLED_ROTATION_180: return 180;
+        default:                return 270;
+    }
+}
+
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    return is_keyboard_master() ? rot_from_deg(ROT_LEFT) : rot_from_deg(ROT_RIGHT);
+    const bool is_master = is_keyboard_master();
+    const uint16_t target_deg = is_master ? ROT_LEFT : ROT_RIGHT;
+    const uint16_t base_deg = deg_from_rot(rotation);
+    const uint16_t return_deg = (uint16_t)((target_deg + 360u - base_deg) % 360u);
+    return rot_from_deg(return_deg);
 }
 
 static inline void get_rotated_dims_for_side(bool is_master, uint8_t *rw, uint8_t *rh) {
