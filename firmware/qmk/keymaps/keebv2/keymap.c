@@ -73,7 +73,13 @@ void keyboard_post_init_user(void) {
 #define MINI(a,b) ((a) < (b) ? (a) : (b))
 #define MAXI(a,b) ((a) > (b) ? (a) : (b))
 
-#define LAYER_PULSE_STEPS 12
+#define LAYER_PULSE_STEPS 24
+
+static inline uint8_t wave_amplitude(uint8_t phase, uint8_t steps) {
+    uint8_t idx = phase % steps;
+    uint8_t half = steps / 2;
+    return (idx <= half) ? idx : (steps - idx);
+}
 
 static inline oled_rotation_t rot_from_deg(uint16_t d) {
     switch (d) {
@@ -278,77 +284,129 @@ static inline void fill_rect(uint8_t w, uint8_t h, int16_t left, int16_t top, in
     }
 }
 
-static void draw_layer_icon_base(uint8_t w, uint8_t h, int16_t top, int16_t bottom, bool emphasize, bool flip) {
+static const int8_t symbol_orbit_offsets[8][2] = {
+    {0, -16}, {5, -12}, {8, -6}, {9, 0}, {6, 7}, {0, 11}, {-6, 7}, {-9, 0}
+};
+
+static void draw_layer_icon_base(uint8_t w, uint8_t h, int16_t top, int16_t bottom, uint8_t phase, uint8_t amplitude, bool flip) {
+    const uint8_t max_amp = LAYER_PULSE_STEPS / 2;
+    const bool emphasize = amplitude > (max_amp / 2);
     const int16_t left = 4;
     const int16_t right = w - 5;
-    const uint8_t frame_thickness = emphasize ? 2 : 1;
+
+    const uint8_t frame_thickness = (uint8_t)(1 + amplitude / 6);
     draw_rect_outline(w, h, left, top, right, bottom, frame_thickness, flip);
 
-    const int16_t key_left = left + 3;
-    const int16_t key_width = 3;
-    const int16_t key_height = emphasize ? 6 : 5;
+    const int16_t key_width = 3 + amplitude / 8;
+    const int16_t key_height = 4 + amplitude / 6;
     const int16_t key_gap_x = 2;
-    const int16_t key_gap_y = 4;
+    const int16_t key_gap_y = 3;
+    const int16_t layout_height = (key_height * 3) + (key_gap_y * 2);
+    int16_t start = top + ((bottom - top - layout_height) / 2);
+    if (start < top + 2) {
+        start = top + 2;
+    }
+
     for (uint8_t row = 0; row < 3; row++) {
-        int16_t row_top = top + 4 + (int16_t)row * (key_height + key_gap_y);
+        int16_t row_top = start + (int16_t)row * (key_height + key_gap_y);
         for (uint8_t col = 0; col < 4; col++) {
-            int16_t col_left = key_left + (int16_t)col * (key_width + key_gap_x);
-            fill_rect(w, h, col_left, row_top, col_left + key_width - 1, row_top + key_height - 1, flip);
+            int16_t col_left = left + 3 + (int16_t)col * (key_width + key_gap_x);
+            fill_rect(w, h, col_left, row_top, col_left + key_width - 1, row_top + key_height, flip);
+        }
+        if (row == (uint8_t)((phase / (LAYER_PULSE_STEPS / 3)) % 3)) {
+            int16_t glow_top = row_top - 1;
+            int16_t glow_bottom = row_top + key_height + 1;
+            if (glow_top < top + 1) glow_top = top + 1;
+            if (glow_bottom > bottom - 1) glow_bottom = bottom - 1;
+            fill_rect(w, h, left + 2, glow_top, right - 2, glow_bottom, flip);
+        }
+    }
+
+    uint8_t sweep_phase = phase % LAYER_PULSE_STEPS;
+    int16_t sweep_x = left + 2 + (int16_t)((int32_t)sweep_phase * (right - left - 4) / LAYER_PULSE_STEPS);
+    for (int16_t y = top + 2; y <= bottom - 2; y++) {
+        write_pixel_safe(w, h, sweep_x, y, true, flip);
+        if (emphasize) {
+            write_pixel_safe(w, h, sweep_x + 1, y, true, flip);
         }
     }
 
     if (emphasize) {
-        fill_rect(w, h, left + 2, bottom - 6, right - 2, bottom - 3, flip);
+        fill_rect(w, h, left + 1, bottom - 7, right - 1, bottom - 4, flip);
     }
 }
 
-static void draw_layer_icon_symbols(uint8_t w, uint8_t h, int16_t top, int16_t bottom, bool emphasize, bool flip) {
+static void draw_layer_icon_symbols(uint8_t w, uint8_t h, int16_t top, int16_t bottom, uint8_t phase, uint8_t amplitude, bool flip) {
+    const uint8_t max_amp = LAYER_PULSE_STEPS / 2;
+    const bool emphasize = amplitude > (max_amp / 2);
     const int16_t cx = w / 2;
     const int16_t cy = (top + bottom) / 2;
-    const int16_t arm_len = (bottom - top) / 2 - 4;
+    const int16_t arm_len = (bottom - top) / 2 - 5 + amplitude / 2;
+    const int16_t bar_width = 1 + amplitude / 10;
 
-    fill_rect(w, h, cx - 1, cy - arm_len, cx + 1, cy + arm_len, flip);
-    fill_rect(w, h, 3, cy - 1, w - 4, cy + 1, flip);
+    fill_rect(w, h, cx - bar_width, cy - arm_len, cx + bar_width, cy + arm_len, flip);
+    fill_rect(w, h, cx - arm_len, cy - bar_width, cx + arm_len, cy + bar_width, flip);
 
     if (emphasize) {
-        for (int16_t d = 0; d <= arm_len; d++) {
-            write_pixel_safe(w, h, cx + d / 2, cy + d, true, flip);
-            write_pixel_safe(w, h, cx - d / 2, cy + d, true, flip);
-            write_pixel_safe(w, h, cx + d / 2, cy - d, true, flip);
-            write_pixel_safe(w, h, cx - d / 2, cy - d, true, flip);
+        for (int16_t offset = 0; offset <= arm_len / 2; offset++) {
+            write_pixel_safe(w, h, cx + offset, cy + offset / 2, true, flip);
+            write_pixel_safe(w, h, cx - offset, cy + offset / 2, true, flip);
+            write_pixel_safe(w, h, cx + offset, cy - offset / 2, true, flip);
+            write_pixel_safe(w, h, cx - offset, cy - offset / 2, true, flip);
+        }
+    }
+
+    uint8_t orbit_index = (phase / 3) % 8;
+    int16_t px = cx + symbol_orbit_offsets[orbit_index][0];
+    int16_t py = cy + symbol_orbit_offsets[orbit_index][1];
+    fill_rect(w, h, px - 1, py - 1, px + 1, py + 1, flip);
+}
+
+static void draw_layer_icon_nav(uint8_t w, uint8_t h, int16_t top, int16_t bottom, uint8_t phase, uint8_t amplitude, bool flip) {
+    const uint8_t max_amp = LAYER_PULSE_STEPS / 2;
+    const int16_t cx = w / 2;
+    int16_t bob = (int16_t)((int32_t)(phase % LAYER_PULSE_STEPS) * 6 / LAYER_PULSE_STEPS) - 3;
+    int16_t head_top = top + 6 + bob;
+    int16_t shaft_top = head_top + 14;
+    int16_t shaft_bottom = bottom - 14 + bob;
+    int16_t shaft_half = 1 + amplitude / 5;
+
+    for (int16_t i = 0; i < 14 + amplitude; i++) {
+        int16_t width = shaft_half + 1 + (14 + amplitude - i);
+        fill_rect(w, h, cx - width, head_top + i, cx + width, head_top + i, flip);
+    }
+
+    fill_rect(w, h, cx - shaft_half, shaft_top, cx + shaft_half, shaft_bottom, flip);
+
+    int16_t trail_base = shaft_bottom + 3;
+    for (uint8_t i = 0; i < 8; i++) {
+        int16_t trail_y = trail_base + (int16_t)i * 3;
+        int16_t wiggle = ((int16_t)((phase + i * 2) % LAYER_PULSE_STEPS) - (LAYER_PULSE_STEPS / 2)) / 6;
+        int16_t trail_x = cx + wiggle;
+        write_pixel_safe(w, h, trail_x, trail_y, true, flip);
+        if (amplitude > (max_amp / 2)) {
+            write_pixel_safe(w, h, trail_x + 1, trail_y, true, flip);
         }
     }
 }
 
-static void draw_layer_icon_nav(uint8_t w, uint8_t h, int16_t top, int16_t bottom, bool emphasize, bool flip) {
-    const int16_t cx = w / 2;
-    const int16_t head_height = 18;
-    const int16_t shaft_top = top + head_height;
-    const int16_t shaft_bottom = bottom - 12;
-
-    fill_rect(w, h, cx - 2, shaft_top, cx + 2, shaft_bottom, flip);
-    for (int16_t offset = 0; offset < head_height; offset++) {
-        int16_t width = emphasize ? (offset / 3) + 3 : (offset / 4) + 2;
-        fill_rect(w, h, cx - width, shaft_top - offset, cx + width, shaft_top - offset, flip);
-    }
-
-    if (emphasize) {
-        fill_rect(w, h, cx - 8, shaft_bottom + 3, cx - 3, shaft_bottom + 6, flip);
-        fill_rect(w, h, cx + 3, shaft_bottom + 3, cx + 8, shaft_bottom + 6, flip);
-    }
-}
-
-static void draw_layer_icon_fn(uint8_t w, uint8_t h, int16_t top, int16_t bottom, bool emphasize, bool flip) {
+static void draw_layer_icon_fn(uint8_t w, uint8_t h, int16_t top, int16_t bottom, uint8_t phase, uint8_t amplitude, bool flip) {
+    const uint8_t max_amp = LAYER_PULSE_STEPS / 2;
     const int16_t left = 6;
     const int16_t right = w - 6;
-    const int16_t stroke = emphasize ? 4 : 3;
+    const uint8_t stroke = 3 + amplitude / 6;
 
     fill_rect(w, h, left, top, left + stroke - 1, bottom, flip);
     fill_rect(w, h, left + stroke, top, right, top + stroke - 1, flip);
-    fill_rect(w, h, left + stroke, (top + bottom) / 2, right - (emphasize ? 1 : 2), (top + bottom) / 2 + stroke - 1, flip);
+    fill_rect(w, h, left + stroke, (top + bottom) / 2, right - 2, (top + bottom) / 2 + stroke - 1, flip);
 
-    if (emphasize) {
-        fill_rect(w, h, right - 4, top + stroke, right - 1, (top + bottom) / 2 - 2, flip);
+    uint8_t sweep_phase = phase % LAYER_PULSE_STEPS;
+    int16_t sweep_height = 2 + amplitude / 6;
+    int16_t sweep_y = top + 4 + (int16_t)((int32_t)sweep_phase * (bottom - top - 8 - sweep_height) / LAYER_PULSE_STEPS);
+    fill_rect(w, h, left + stroke + 1, sweep_y, right - 1, sweep_y + sweep_height, flip);
+
+    if (amplitude > (max_amp / 2)) {
+        fill_rect(w, h, right - 4, top + stroke + 2, right - 1, (top + bottom) / 2 - 1, flip);
     }
 }
 
@@ -359,24 +417,20 @@ static void draw_layer_pulse_frame(bool is_master, uint8_t layer, uint8_t phase,
 
     const int16_t icon_top = 16;
     const int16_t icon_bottom = h - 20;
-
-    const uint8_t half = LAYER_PULSE_STEPS / 2;
-    uint8_t idx = phase % LAYER_PULSE_STEPS;
-    uint8_t distance = (idx <= half) ? idx : (LAYER_PULSE_STEPS - idx);
-    bool emphasize = (distance >= (half / 2));
+    uint8_t amplitude = wave_amplitude(phase, LAYER_PULSE_STEPS);
 
     switch (layer) {
         case _BASE:
-            draw_layer_icon_base(w, h, icon_top, icon_bottom, emphasize, flip);
+            draw_layer_icon_base(w, h, icon_top, icon_bottom, phase, amplitude, flip);
             break;
         case _SYM:
-            draw_layer_icon_symbols(w, h, icon_top, icon_bottom, emphasize, flip);
+            draw_layer_icon_symbols(w, h, icon_top, icon_bottom, phase, amplitude, flip);
             break;
         case _NAV:
-            draw_layer_icon_nav(w, h, icon_top, icon_bottom, emphasize, flip);
+            draw_layer_icon_nav(w, h, icon_top, icon_bottom, phase, amplitude, flip);
             break;
         case _FN:
-            draw_layer_icon_fn(w, h, icon_top, icon_bottom, emphasize, flip);
+            draw_layer_icon_fn(w, h, icon_top, icon_bottom, phase, amplitude, flip);
             break;
         default:
             draw_rotaware_grid(is_master, flip);
@@ -422,28 +476,91 @@ static void draw_letter_I(uint8_t w, uint8_t h, int16_t left, int16_t top, int16
     fill_rect(w, h, left, bottom - stroke + 1, right, bottom, flip);
 }
 
-static void draw_david_logo(bool is_master, bool flip) {
+static void draw_david_logo_frame(bool is_master, bool flip, uint8_t phase, uint8_t amplitude) {
     uint8_t w, h;
     get_rotated_dims_for_side(is_master, &w, &h);
     oled_clear();
-    const int16_t margin = 4;
-    const int16_t width = w - (margin * 2) - 2;
-    const int16_t letter_height = 18;
-    const uint8_t stroke = 3;
-    const int16_t spacing = 4;
+
+    const uint8_t max_amp = LAYER_PULSE_STEPS / 2;
+    int16_t margin = 4 - (int16_t)(amplitude / 6);
+    if (margin < 1) {
+        margin = 1;
+    }
+
+    uint8_t stroke = 2 + amplitude / 4;
+    if (stroke > 5) {
+        stroke = 5;
+    }
+
+    int16_t letter_height = 18 + amplitude / 3;
+    if (letter_height > 24) {
+        letter_height = 24;
+    }
+
+    int16_t spacing = 4 + amplitude / 6;
+    if (spacing > 6) {
+        spacing = 6;
+    }
 
     int16_t left = margin + 1;
-    int16_t top = 6;
+    int16_t width = w - (margin * 2) - 2;
+    if (width < 10) {
+        width = w - 6;
+    }
 
-    draw_letter_D(w, h, left, top, width, letter_height, stroke, flip);
-    top += letter_height + spacing;
-    draw_letter_A(w, h, left, top, width, letter_height, stroke, flip);
-    top += letter_height + spacing;
-    draw_letter_V(w, h, left, top, width, letter_height, stroke, flip);
-    top += letter_height + spacing;
-    draw_letter_I(w, h, left, top, width, letter_height, stroke, flip);
-    top += letter_height + spacing;
-    draw_letter_D(w, h, left, top, width, letter_height, stroke, flip);
+    int16_t top = 6 + (int16_t)((max_amp - amplitude) / 2);
+    int16_t total_height = (letter_height * 5) + (spacing * 4);
+    if (top + total_height > h - 8) {
+        top = (h - 8) - total_height;
+    }
+    if (top < 4) {
+        top = 4;
+    }
+
+    bool aura = amplitude > (max_amp * 3) / 4;
+    if (aura) {
+        int16_t aura_left = MAXI(0, margin - 1);
+        int16_t aura_right = MINI((int16_t)w - 1, w - margin);
+        draw_rect_outline(w, h, aura_left, 4, aura_right, h - 6, 1, flip);
+        for (uint8_t i = 0; i < 4; i++) {
+            if (((phase / 2) % 4) == i) {
+                int16_t halo_x = aura_left + 2 + (int16_t)i * (aura_right - aura_left - 4) / 3;
+                fill_rect(w, h, halo_x, 6, halo_x + 1, 10, flip);
+                fill_rect(w, h, aura_right - (halo_x - aura_left), h - 11, aura_right - (halo_x - aura_left) + 1, h - 7, flip);
+            }
+        }
+    }
+
+    int16_t shimmer_y = top - 3 + (int16_t)((int32_t)(phase % LAYER_PULSE_STEPS) * (letter_height + spacing) / LAYER_PULSE_STEPS);
+    if (shimmer_y >= 4 && shimmer_y <= h - 6) {
+        int16_t shimmer_left = MAXI(0, left - 1);
+        int16_t shimmer_right = MINI((int16_t)w - 1, left + width + 1);
+        fill_rect(w, h, shimmer_left, shimmer_y, shimmer_right, shimmer_y, flip);
+    }
+
+    int16_t cursor_y = top + total_height + 4 - (int16_t)((int32_t)(phase % LAYER_PULSE_STEPS) * (spacing + 2) / LAYER_PULSE_STEPS);
+    if (cursor_y < top + total_height + 6 && cursor_y > top + total_height - 18) {
+        int16_t accent_left = MINI((int16_t)w - 3, left + width + 1);
+        fill_rect(w, h, accent_left, cursor_y, accent_left + 2, cursor_y + 2, flip);
+    }
+
+    int16_t draw_top = top;
+    draw_letter_D(w, h, left, draw_top, width, letter_height, stroke, flip);
+    draw_top += letter_height + spacing;
+    draw_letter_A(w, h, left, draw_top, width, letter_height, stroke, flip);
+    draw_top += letter_height + spacing;
+    draw_letter_V(w, h, left, draw_top, width, letter_height, stroke, flip);
+    draw_top += letter_height + spacing;
+    draw_letter_I(w, h, left, draw_top, width, letter_height, stroke, flip);
+    draw_top += letter_height + spacing;
+    draw_letter_D(w, h, left, draw_top, width, letter_height, stroke, flip);
+
+    if (amplitude > (max_amp / 2)) {
+        int16_t band_left = MAXI(0, left - 1);
+        int16_t band_right = MINI((int16_t)w - 1, left + width + 1);
+        fill_rect(w, h, band_left, top - 2, band_right, top - 1, flip);
+        fill_rect(w, h, band_left, draw_top + letter_height + 1, band_right, draw_top + letter_height + 2, flip);
+    }
 }
 
 static void draw_static_mode(bool is_master, uint8_t mode, bool flip) {
@@ -455,7 +572,7 @@ static void draw_static_mode(bool is_master, uint8_t mode, bool flip) {
             draw_qmk_logo(is_master, flip);
             break;
         case OLED_MODE_DAVID:
-            draw_david_logo(is_master, flip);
+            draw_david_logo_frame(is_master, flip, 0, LAYER_PULSE_STEPS / 4);
             break;
         default:
             draw_rotaware_grid(is_master, flip);
@@ -471,7 +588,10 @@ bool oled_task_user(void) {
     static uint8_t left_cached_layer = 0;
     static bool left_initialized = false;
     static uint8_t left_last_static_mode = 0xFF;
-    static uint8_t right_last_mode = 0xFF;
+    static uint32_t right_last_frame = 0;
+    static uint8_t right_phase = 0;
+    static bool right_initialized = false;
+    static uint8_t right_last_static_mode = 0xFF;
 
     if (is_master) {
         const uint8_t mode = OLED_LEFT_MODE;
@@ -515,9 +635,35 @@ bool oled_task_user(void) {
         }
     } else {
         const uint8_t mode = OLED_RIGHT_MODE;
-        if (right_last_mode != mode) {
-            draw_static_mode(false, mode, flip);
-            right_last_mode = mode;
+        if (mode == OLED_MODE_DAVID) {
+            uint32_t now = timer_read32();
+            bool needs_redraw = false;
+
+            if (!right_initialized) {
+                right_initialized = true;
+                right_phase = 0;
+                right_last_frame = now;
+                needs_redraw = true;
+            }
+
+            if ((uint32_t)(now - right_last_frame) >= 140) {
+                right_last_frame = now;
+                right_phase = (right_phase + 1) % LAYER_PULSE_STEPS;
+                needs_redraw = true;
+            }
+
+            if (needs_redraw) {
+                uint8_t amplitude = wave_amplitude(right_phase, LAYER_PULSE_STEPS);
+                draw_david_logo_frame(false, flip, right_phase, amplitude);
+            }
+
+            right_last_static_mode = 0xFF;
+        } else {
+            right_initialized = false;
+            if (right_last_static_mode != mode) {
+                draw_static_mode(false, mode, flip);
+                right_last_static_mode = mode;
+            }
         }
     }
 
