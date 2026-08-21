@@ -23,6 +23,16 @@ if (-not (Test-Path $QmkPath)) {
     throw "QMK firmware path '$QmkPath' not found. Pass -QmkPath to this script if you keep it elsewhere."
 }
 
+$repoRoot = Split-Path $PSScriptRoot -Parent
+$keymapSrc = Join-Path $repoRoot "keyboards\crkbd\keymaps\$Keymap"
+if (-not (Test-Path $keymapSrc)) {
+    throw "Keymap '$keymapSrc' not found."
+}
+$keymapDst = Join-Path $QmkPath "keyboards\crkbd\keymaps\$Keymap"
+New-Item -ItemType Directory -Force -Path $keymapDst | Out-Null
+Copy-Item -Force (Join-Path $keymapSrc "*") $keymapDst
+Write-Host "Copied $Keymap into $keymapDst" -ForegroundColor Cyan
+
 Push-Location $QmkPath
 try {
     Invoke-QmkCommand "compile -kb crkbd -km $Keymap"

@@ -1,7 +1,5 @@
 # keebv2 Corne keymap
 
-**Canonical copy:** `keyboards/crkbd/keymaps/keebv2/` (QMK External Userspace). This folder is a duplicate for older docs.
-
 Drop the contents of this folder into `qmk_firmware/keyboards/crkbd/keymaps/keebv2` and build with:
 
 ```

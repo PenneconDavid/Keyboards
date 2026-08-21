@@ -3,12 +3,13 @@
 ## Project
 
 - **Name:** Keyboards
-- **Purpose:** Personal QMK firmware staging area for Corne split keyboard layouts
+- **Purpose:** Personal QMK userspace for wired Corne (and archived VIA/Vial binaries)
 - **Stack:** QMK firmware, crkbd/Corne, PowerShell flash scripts
+- **Wireless ZMK:** `C:\Users\dseib\Documents\Projects\ZmkConfig` (do not mix sources here)
 
 ## Build / flash
 
-- **Compile:** `qmk compile -kb crkbd -km keebv2` (after copying keymap into `qmk_firmware`)
+- **Compile:** `qmk compile -kb crkbd -km keebv2` (keymap at `keyboards/crkbd/keymaps/keebv2/`; script copies into `qmk_firmware`)
 - **No web dev server** — Tier 2 browser QA skills do not apply.
 
 ## Shared config
@@ -19,5 +20,6 @@
 
 ## Conventions
 
-- Copy keymap into local QMK tree before compile — do not assume in-repo paths match QMK install.
+- Userspace keymap lives at `keyboards/crkbd/keymaps/keebv2/`. `scripts/flash-keebv2.ps1` copies it into the local QMK tree.
 - Ask before modifying keymaps the user has not requested.
+- Live VIA snapshot: `layouts/via/crkbd.layout.2026-05-10.json` (wired Corne only).

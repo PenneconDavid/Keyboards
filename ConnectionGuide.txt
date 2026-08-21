@@ -1,0 +1,24 @@
+# Connection Guide
+
+## QMK — wired Corne (crkbd / keebv2)
+
+- **Userspace keymap:** `keyboards/crkbd/keymaps/keebv2/`
+- **Build tree:** `$env:USERPROFILE\qmk_firmware` (override with `scripts/flash-keebv2.ps1 -QmkPath`)
+- **Compile:** `qmk compile -kb crkbd -km keebv2` (flash script copies the userspace keymap first)
+- **Flash (Pro Micro / ATmega32U4):** avrdude `avr109`, left default `COM5`, right default `COM6` (confirm in Device Manager; ports move)
+- **Remap:** VIA over USB HID. Live snapshot: `layouts/via/crkbd.layout.2026-05-10.json`
+- **Not wireless.** Soft serial on D2, `MASTER_LEFT`, TRRS.
+
+## ZMK — wireless boards (other repo)
+
+`C:\Users\dseib\Documents\Projects\ZmkConfig`
+
+- **CI:** GitHub Actions `firmware.zip` UF2s
+- **Flash:** UF2 mass-storage (nice!nano / XIAO `XIAO-SENSE`)
+- **Eyelash rollback:** `ZmkConfig/known-good/eyelash-corne/` (nice!view vs OLED packs)
+- **Sofle rollback:** `known-good/sofle-dongle/` in this repo
+- **Prospector attempt:** `ZmkConfig/profiles/prospector-eyelash/`
+
+## Vial — Cheapino
+
+- **Binary:** `known-good/cheapino/cheapino_vial.uf2`

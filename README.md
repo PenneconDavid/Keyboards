@@ -1,29 +1,23 @@
 # Keyboards
 
-Personal staging area for split keyboard firmware, layouts, and flashing notes.
+Personal QMK userspace for wired boards, plus archived binaries for other keyboards. Wireless ZMK (Eyelash Corne, Sofle, Prospector) lives in `C:\Users\dseib\Documents\Projects\ZmkConfig`.
 
-## Repository Layout
-- `docs/`: reference material (layer diagrams, wiring photos, build notes).
-- `layouts/via/`: raw layout exports from VIA or other tools for archival.
-- `firmware/qmk/keymaps/keebv2/`: active Corne keymap ready to drop into `qmk_firmware`.
-- `crkbd/`: untouched upstream board definition (pulled from the public QMK repo).
-- `archive/`: historical builds and configs that are no longer flashed but may contain reusable snippets.
+## Layout
+- `keyboards/crkbd/keymaps/keebv2/`: active wired Corne keymap (QMK External Userspace path).
+- `qmk.json`: userspace build target `crkbd:keebv2`.
+- `layouts/via/`: VIA exports. `crkbd.layout.2026-05-10.json` is the live EEPROM snapshot; `crkbd.layout.json` is older.
+- `known-good/`: recovery binaries (wired Corne hex, Sofle ZMK UF2s, Cheapino Vial UF2).
+- `crkbd/`: vendored upstream board snapshot (reference only; compile uses your QMK install).
+- `firmware/qmk/keymaps/keebv2/`: copy of keebv2 kept so old docs still resolve.
+- `archive/`: historical sources.
 
-## Using the `keebv2` Keymap
-1. Install the QMK CLI (`python -m pip install qmk` or follow <https://docs.qmk.fm/#/newbs_getting_started>). Run `qmk setup` once to clone the firmware tree.
-2. Copy the contents of `firmware/qmk/keymaps/keebv2/` into `qmk_firmware/keyboards/crkbd/keymaps/keebv2/` (create the folder if it does not exist).
-3. From the QMK repo root: `qmk compile -kb crkbd -km keebv2`
-4. Flash each half with `qmk flash -kb crkbd -km keebv2`. For Pro Micros, specify the bootloader when needed, e.g. `-bl avrdude -c avr109 -p ATmega32U4 -P COM5`. The keymap defaults to the hardware PWM WS2812 driver, so flashing both halves keeps RGB smooth without overrunning the AVR timers.
-5. Optional helper: run `scripts/flash-keebv2.ps1` from PowerShell to compile and flash both halves (defaults to `COM5` and `COM6`, override with `-LeftPort`/`-RightPort`).
-6. After flashing, use `qmk console` to confirm both halves connect, RGB syncs, and no unexpected debug spam appears.
+## Using keebv2
+1. Install the QMK CLI and run `qmk setup` once.
+2. Point QMK at this repo: `qmk config user.overlay_dir="$(realpath .)"` (or the Windows equivalent path).
+3. `qmk compile -kb crkbd -km keebv2` or `qmk userspace-compile`.
+4. Optional: `scripts/flash-keebv2.ps1` copies the keymap into `~\qmk_firmware` then flashes Pro Micro halves (defaults COM5 / COM6).
 
-## Configurable Options
-- `firmware/qmk/keymaps/keebv2/config.h` now includes user-tunable sections for OLED art, rotation, daisy geometry, and the RGB startup animation. Override any define at build time (e.g. `qmk compile ... OLED_RIGHT_MODE=0` or `RGB_MATRIX_STARTUP_MODE=RGB_MATRIX_CYCLE_ALL`) to customize firmware without editing source files.
+After flashing, remap in VIA. Save a new dated JSON into `layouts/via/` before experiments.
 
-## Flashing Best Practices
-- Put the keyboard into reset using the reset switch or `QK_BOOT` keycode; avoid power-cycling USB mid-flash.
-- Flash the left (master) half first, then the right; confirm OLED orientation and layer sync before disconnecting.
-- Keep `qmk_firmware` up to date (`git pull upstream master`) so you receive split keyboard fixes and RGB/OLED improvements.
-- Store every VIA export you care about in `layouts/` before experimenting, so you can diff changes against version control.
-- When experimenting with new effects or hardware, branch the repo (e.g. `git checkout -b feature/oled-experiments`) to keep shipping firmware pristine.
-  
+## Wireless
+Do not mix ZMK sources into this repo. Eyelash + Prospector: `ZmkConfig/profiles/prospector-eyelash/`.
