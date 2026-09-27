@@ -1,5 +1,18 @@
 # Firmware repo assessment
 
+## 2026-08-21 — Photos received (dongle + Prospector likely; underside still missing)
+
+Four photos in chat (IMG_9224–9227). Identified as:
+
+| Photo | Likely device | Firmware takeaway |
+|---|---|---|
+| Square OLED, USB check, BT **2**, batteries **37% / 43%**, modifiers, bongo cat, **QWERTY** | **Current vendor dongle** (nice!nano-class stick, OLED on the receiver) | Live setup is dongle-central with two peripheral halves. Rollback pack: `ZmkConfig/known-good/eyelash-corne/dongle-niceview/` (OLED on stick, e-ink on halves) unless the half screen is actually OLED |
+| Cube with color LCD, layer slide **FN / QWERTY / NUMBER / AI**, USB-C on top, white cable | **Prospector** (XIAO + Waveshare-class color panel in a cube case) | Hardware present. In-repo keymaps do **not** have an `AI` layer (vendor names are QWERTY/NUMBER/SYMBOL/Fn; Prospector profile uses Base/Sym/Game/Fn) |
+| White plate, MagSafe ring, four rubber feet, irregular half-shaped outline | **MagSafe sled / desk mount**, not a dongle | Irrelevant to flash targets |
+| Right split half, acrylic window, mountain graphic, square control beside the screen, MT3 dwarvish caps | **Wireless Corne right half** (5-way under the square cap) — *confirm vs Sofle* | Top side only. Does not show MCU (socketed nice!nano vs soldered) |
+
+**Still blocked on:** underside of a wireless Corne half (MCU / reset / battery). Do not flash Prospector until that lands.
+
 ## 2026-08-21 — Hardware identity (user-confirmed)
 
 Naming: seller “eyelash” covers both boards. User’s **primary** is a **wireless 42-key Corne-like** (knob left, 5-way right, dual nice!view). The **larger** split is a **Sofle** (~58 keys), also knob + 5-way.
@@ -9,9 +22,9 @@ Naming: seller “eyelash” covers both boards. User’s **primary** is a **wir
 | Wireless 42-key Corne | Daily driver | nice!view both halves (not backlit) | Left encoder = volume; right 5-way = arrows + Enter; switch RGB works | USB-C stick, **square** display, button + switch on back (not Prospector) | Screenshot 42-key layout; same layout if Prospector becomes central |
 | Wired Corne | Backup | OLED (QMK keebv2) | No wireless dongle | n/a (TRRS) | Same 42-key screenshot / May 2026 VIA JSON |
 | Sofle (~58) | Separate keyboard | (not re-confirmed this turn) | Knob + directional | Own dongle in vendor packs | **Do not** copy the 42-key Corne map |
-| Prospector | Unused; intended Corne dongle replacement | Round color LCD (photo pending) | XIAO BLE | Would replace the square-display stick | Same Corne keymap, halves stay peripherals |
+| Prospector | Unused; intended Corne dongle replacement | Color LCD in a cube case (photo IMG_9225; confirm round Waveshare vs square window) | XIAO BLE | Would replace the square-display stick | Same Corne keymap, halves stay peripherals. Live UI shows an **AI** layer not in-repo |
 
-MCU on the wireless Corne still unknown (nice!nano vs soldered). Photos promised: Corne underside, current dongle, Prospector. Until then, treat vendor **dongle-niceview** pack as rollback (OLED on the **stick**, nice!view on the **halves**).
+MCU on the wireless Corne still unknown (nice!nano vs soldered). Dongle + likely-Prospector photos are in. **Underside still missing.** Until then, treat vendor **dongle-niceview** pack as rollback (OLED on the **stick**, nice!view on the **halves**).
 
 ## 2026-08-21 — Dongle-central confirmed; Prospector profile added
 

@@ -12,6 +12,21 @@
 - **Compile:** `qmk compile -kb crkbd -km keebv2` (keymap at `keyboards/crkbd/keymaps/keebv2/`; script copies into `qmk_firmware`)
 - **No web dev server** — Tier 2 browser QA skills do not apply.
 
+## Commands
+
+| Task | Command |
+|------|---------|
+| Compile | `qmk compile -kb crkbd -km keebv2` |
+| Flash | `scripts/flash-keebv2.ps1` (ask first; it writes to a connected board) |
+
+No test runner, lint, or web server. Tier 2 browser QA skills do not apply.
+
+## Definition of done
+
+- `qmk compile -kb crkbd -km keebv2` succeeds with no new warnings.
+- Layer or key changes are described in the commit body so they can be verified on the board.
+- Never flash without the user asking.
+
 ## Shared config
 
 - **Skills:** `.agents/skills/` → [cursor-skills](https://github.com/PenneconDavid/cursor-skills)
