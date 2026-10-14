@@ -1,5 +1,18 @@
 # Firmware repo assessment
 
+## 2026-10-14 — Photo set confirmed (dongle + Prospector + right half + MagSafe)
+
+User resent IMG_9224–9227 and asked if anything else is needed.
+
+| Photo | Confirmed | Firmware takeaway |
+|---|---|---|
+| Square OLED in a small stand: USB, BT **2**, **37% / 43%**, NLCK/Win/Alt/Shift, bongo cat, **QWERTY** | **Live vendor dongle** (central). Two peripheral halves are bonded and reporting battery | Rollback remains `dongle-niceview` (OLED on the stick, e-ink on the halves) |
+| Cube, USB-C on top, color LCD: **FN / QWERTY / NUMBER / AI**, two red **X** marks | **Prospector** (unused as HID central). Red X’s match disconnected left/right | Do not treat as the live receiver. **AI** layer still not in-repo |
+| White plate, MagSafe ring, four rubber feet, half-shaped outline | MagSafe sled **or** a closed bottom cover | No MCU visible either way |
+| Right half, mountain/sun on e-ink, blank square cap, MT3 dwarvish legends, Corne outline | **Wireless Eyelash Corne right half**, not Sofle. Screen is **nice!view**. Square cap is the **5-way**. Alpha block is **3×5** (YUIOP / HJKL; / NM,./) plus thumbs and extras | Top side only. MCU still unseen |
+
+**Still blocking for a flash-safe MCU call:** underside of the *keyboard* PCB (nice!nano vs soldered vs XIAO), not the MagSafe plate. Optional: left half (encoder), inner-edge USB-C / power switch / reset hole, back of the OLED dongle.
+
 ## 2026-08-21 — Photos received (dongle + Prospector likely; underside still missing)
 
 Four photos in chat (IMG_9224–9227). Identified as:
