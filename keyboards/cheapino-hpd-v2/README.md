@@ -1,3 +1,5 @@
+> **NOT DAVID'S BOARD (2026-10-17, superseded).** David's AliExpress "HPD V2" has 60 keys, a knob on the left half and a trackball on the right: it is an **Ergohaven High Plains Drifter v2**, documented in [`../ergohaven-hpd-v2/`](../ergohaven-hpd-v2/README.md). This folder is kept only because the Vial UF2 in `known-good/cheapino/` really is Cheapino v2 firmware (the analysis in §1 of this file stands for that file), so it documents a firmware file whose origin is now an open question, not David's keyboard. Do not load the .vil here on the HPD.
+
 # HPD V2 wired Vial split (Cheapino v2 PCB): gaming-first layout proposal v1
 
 Draft 2026-10-17 for David's sign-off. Nothing has been loaded on the board yet.
