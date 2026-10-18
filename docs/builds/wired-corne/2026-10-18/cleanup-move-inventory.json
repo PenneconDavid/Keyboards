@@ -1,0 +1,375 @@
+[
+  {
+    "Original": "firmware-out\\hpd-v2\\hpd_v2_gaming.vil",
+    "Destination": "firmware-out\\hpd-v2\\hpd_v2_gaming.vil",
+    "SHA256": "b175ad8027e096f15de0122e771f95ef08eb51ef02449ad6edbe5642d9c32af4",
+    "FinalSHA256": "b175ad8027e096f15de0122e771f95ef08eb51ef02449ad6edbe5642d9c32af4",
+    "CleanupMoveReversed": true
+  },
+  {
+    "Original": "firmware-out\\hpd-v2\\key-table.md",
+    "Destination": "firmware-out\\hpd-v2\\key-table.md",
+    "SHA256": "48a551b8bf271e4fabc534a1c45ab0650fa9c79069d006af0f47f76e974a144e",
+    "FinalSHA256": "48a551b8bf271e4fabc534a1c45ab0650fa9c79069d006af0f47f76e974a144e",
+    "CleanupMoveReversed": true
+  },
+  {
+    "Original": "firmware-out\\hpd-v2\\README.md",
+    "Destination": "firmware-out\\hpd-v2\\README.md",
+    "SHA256": "40b8503666eae7c01003879933199c781d48f23b62510b6478c966684208e1e0",
+    "FinalSHA256": "3a43cda29c1c1b7e29141a502c1c6b984dd16f9cc6eea6b8feb50a475e9a35c2",
+    "CleanupMoveReversed": true
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\A-bongo-source.gif",
+    "Destination": "docs\\oled-previews\\A-bongo-source.gif",
+    "SHA256": "0ac79d0ff9e694edd36682cbe8363b64447c54cd685f556a5a055f4b6ca1b7f8",
+    "FinalSHA256": "0ac79d0ff9e694edd36682cbe8363b64447c54cd685f556a5a055f4b6ca1b7f8"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\A-preview.png",
+    "Destination": "docs\\oled-previews\\A-preview.png",
+    "SHA256": "23d2c40394d9eeeb6fe6dd60045ef84c1e53dfa399e7a1915605ab247bc3b543",
+    "FinalSHA256": "23d2c40394d9eeeb6fe6dd60045ef84c1e53dfa399e7a1915605ab247bc3b543"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\B-luna.gif",
+    "Destination": "docs\\oled-previews\\B-luna.gif",
+    "SHA256": "90c62e9c345b1113f4247e80f4f757cb61084ec1e8bf266cbc7c58405563b5b6",
+    "FinalSHA256": "90c62e9c345b1113f4247e80f4f757cb61084ec1e8bf266cbc7c58405563b5b6"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\B-preview.png",
+    "Destination": "docs\\oled-previews\\B-preview.png",
+    "SHA256": "749b32aec188ae2f05f7ded4f15ca173b79c4e67718d5557c13a29fdd06350be",
+    "FinalSHA256": "749b32aec188ae2f05f7ded4f15ca173b79c4e67718d5557c13a29fdd06350be"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\build_assets.py",
+    "Destination": "docs\\oled-previews\\build_assets.py",
+    "SHA256": "ec53abf9f5d04425e98fc56f30bb21cede03efc347094fc7324e520b7929fd25",
+    "FinalSHA256": "3a754e750b663654e911bb8b5fad9088fc362e4c14e8e7bf910c76904182dd84"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\C-logo-32x128.png",
+    "Destination": "docs\\oled-previews\\C-logo-32x128.png",
+    "SHA256": "08281dda8d347b42f9e55a85f1a249f78695e75fdbea8381602b063b4da5d36f",
+    "FinalSHA256": "08281dda8d347b42f9e55a85f1a249f78695e75fdbea8381602b063b4da5d36f"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\C-preview.png",
+    "Destination": "docs\\oled-previews\\C-preview.png",
+    "SHA256": "3019b612327d86619927e4106206856e5d6990cc70d92ef4f4ed1d52b17d705a",
+    "FinalSHA256": "3019b612327d86619927e4106206856e5d6990cc70d92ef4f4ed1d52b17d705a"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\D-preview.png",
+    "Destination": "docs\\oled-previews\\D-preview.png",
+    "SHA256": "139e815179596cf5073d40c51ccfea31a92a91e1adafc35d585a5b23ab67077e",
+    "FinalSHA256": "139e815179596cf5073d40c51ccfea31a92a91e1adafc35d585a5b23ab67077e"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\D-status-32x128.png",
+    "Destination": "docs\\oled-previews\\D-status-32x128.png",
+    "SHA256": "d63536f7628eff8f606a2ea390970564f2dbe32046cad7b7320a986d5088701a",
+    "FinalSHA256": "d63536f7628eff8f606a2ea390970564f2dbe32046cad7b7320a986d5088701a"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\E-preview.png",
+    "Destination": "docs\\oled-previews\\E-preview.png",
+    "SHA256": "df6ede8939f5cc26e38032ec1022a6c2896440f123d1ce03573e9f2ec4888a5a",
+    "FinalSHA256": "df6ede8939f5cc26e38032ec1022a6c2896440f123d1ce03573e9f2ec4888a5a"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\E-slideshow.gif",
+    "Destination": "docs\\oled-previews\\E-slideshow.gif",
+    "SHA256": "81f14463e3a0e9a91637b9427b023d9a97a696b54cddfd9b23199de82f6d302f",
+    "FinalSHA256": "81f14463e3a0e9a91637b9427b023d9a97a696b54cddfd9b23199de82f6d302f"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\F-preview.png",
+    "Destination": "docs\\oled-previews\\F-preview.png",
+    "SHA256": "60ce6feb3b3f6ee1e8cd8330ce43cd814f49cec579db1d86ee45c9d0b0bea577",
+    "FinalSHA256": "60ce6feb3b3f6ee1e8cd8330ce43cd814f49cec579db1d86ee45c9d0b0bea577"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\F-stock-128x32.png",
+    "Destination": "docs\\oled-previews\\F-stock-128x32.png",
+    "SHA256": "1e8f317d882077826b11a6be92f19a1db4ea281903acb05bb85c63db155335f7",
+    "FinalSHA256": "1e8f317d882077826b11a6be92f19a1db4ea281903acb05bb85c63db155335f7"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\README.md",
+    "Destination": "docs\\oled-previews\\README.md",
+    "SHA256": "072952c6f3edc62619655738db634a03630c285e3473e4a107004cf2ebd51eaa",
+    "FinalSHA256": "8a4034b5ebc2176f0a4177208fa913446026334b68c0bce96a0be546b98a578f"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\render_previews.py",
+    "Destination": "docs\\oled-previews\\render_previews.py",
+    "SHA256": "29b7081fda0af646a97a514708dc4a083a0daa12a6835fed6bb73ebaa1f7bac2",
+    "FinalSHA256": "29b7081fda0af646a97a514708dc4a083a0daa12a6835fed6bb73ebaa1f7bac2"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\six-options.png",
+    "Destination": "docs\\oled-previews\\six-options.png",
+    "SHA256": "1ebef66cc91ac3a61caa076fd256e9e25dd82bf604fe01d5e081a1cda217e1a6",
+    "FinalSHA256": "1ebef66cc91ac3a61caa076fd256e9e25dd82bf604fe01d5e081a1cda217e1a6"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\source-manifest.json",
+    "Destination": "docs\\oled-previews\\source-manifest.json",
+    "SHA256": "b8af24d4d8f342308ee931670a028c755e22e72225c89aa240961446b843ff9f",
+    "FinalSHA256": "b8af24d4d8f342308ee931670a028c755e22e72225c89aa240961446b843ff9f"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\final\\cards.raw",
+    "Destination": "docs\\oled-previews\\final\\cards.raw",
+    "SHA256": "99be25d3cb4fcb3b681dd1c30e88a7a8c74c14046d5f738611b8501a02929c82",
+    "FinalSHA256": "99be25d3cb4fcb3b681dd1c30e88a7a8c74c14046d5f738611b8501a02929c82"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\final\\firmware-preview.png",
+    "Destination": "docs\\oled-previews\\final\\firmware-preview.png",
+    "SHA256": "6cf620ae18e9471fd8ca33d454f1b41d5f17b3144304e1747acb13047fa35f26",
+    "FinalSHA256": "6cf620ae18e9471fd8ca33d454f1b41d5f17b3144304e1747acb13047fa35f26"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\final\\left-0-BASE.png",
+    "Destination": "docs\\oled-previews\\final\\left-0-BASE.png",
+    "SHA256": "5e9a528aa8a58a51f8207ff16725fbd45be3ebb45d7b4144b879959bd40a6afe",
+    "FinalSHA256": "5e9a528aa8a58a51f8207ff16725fbd45be3ebb45d7b4144b879959bd40a6afe"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\final\\left-1-SYM.png",
+    "Destination": "docs\\oled-previews\\final\\left-1-SYM.png",
+    "SHA256": "af53222bc3df3287bd60f29352e4720e2f3f59b27d67cc995363020a4d1e8c8c",
+    "FinalSHA256": "af53222bc3df3287bd60f29352e4720e2f3f59b27d67cc995363020a4d1e8c8c"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\final\\left-2-WASD.png",
+    "Destination": "docs\\oled-previews\\final\\left-2-WASD.png",
+    "SHA256": "db2dfb584f40afa089580291bad60d262f19190e0b090f864a251fa42ea64100",
+    "FinalSHA256": "db2dfb584f40afa089580291bad60d262f19190e0b090f864a251fa42ea64100"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\final\\left-3-FN.png",
+    "Destination": "docs\\oled-previews\\final\\left-3-FN.png",
+    "SHA256": "fe9326ea2299df24cdd422d32137d2bc230d1f17c874f283b0489725d865fc31",
+    "FinalSHA256": "fe9326ea2299df24cdd422d32137d2bc230d1f17c874f283b0489725d865fc31"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\final\\left-4-ARC.png",
+    "Destination": "docs\\oled-previews\\final\\left-4-ARC.png",
+    "SHA256": "1d289036bd065936f3ce3d574374404729dc46fdebae0e2276b33265a21632fa",
+    "FinalSHA256": "1d289036bd065936f3ce3d574374404729dc46fdebae0e2276b33265a21632fa"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\final\\left-5-ESDF.png",
+    "Destination": "docs\\oled-previews\\final\\left-5-ESDF.png",
+    "SHA256": "1165bfad06eb42130ad2083b236cb5032d692210885ace43e5aa8faf1cef2900",
+    "FinalSHA256": "1165bfad06eb42130ad2083b236cb5032d692210885ace43e5aa8faf1cef2900"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\final\\left-6-ARC-E.png",
+    "Destination": "docs\\oled-previews\\final\\left-6-ARC-E.png",
+    "SHA256": "15251d904dffaaafb64b15121a8c102d321ca3fd930c24df530d6922db6fc395",
+    "FinalSHA256": "15251d904dffaaafb64b15121a8c102d321ca3fd930c24df530d6922db6fc395"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\final\\luna-poses.gif",
+    "Destination": "docs\\oled-previews\\final\\luna-poses.gif",
+    "SHA256": "2f2cbce3a541f70b4361f1392c8ec09884d513c40bc38fa9e4b4867bc489c970",
+    "FinalSHA256": "2f2cbce3a541f70b4361f1392c8ec09884d513c40bc38fa9e4b4867bc489c970"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\final\\luna.raw",
+    "Destination": "docs\\oled-previews\\final\\luna.raw",
+    "SHA256": "42225ff829e5023d6fdcdc9d1ca82e4b06031510097ba23df79e2efc8965e543",
+    "FinalSHA256": "42225ff829e5023d6fdcdc9d1ca82e4b06031510097ba23df79e2efc8965e543"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\sources\\bongo.c",
+    "Destination": "docs\\oled-previews\\sources\\bongo.c",
+    "SHA256": "eec749dc7de851c819afb2eec49037dc044e5ee5381bc7ba5e43753eda3f657d",
+    "FinalSHA256": "eec749dc7de851c819afb2eec49037dc044e5ee5381bc7ba5e43753eda3f657d"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\sources\\luna.c",
+    "Destination": "docs\\oled-previews\\sources\\luna.c",
+    "SHA256": "71d56482f8fbe0e7a59c3f81c27b1e915af2ba93f1efdda7d39844ed4b6f5975",
+    "FinalSHA256": "71d56482f8fbe0e7a59c3f81c27b1e915af2ba93f1efdda7d39844ed4b6f5975"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\verification\\atomic_util.h",
+    "Destination": "docs\\oled-previews\\verification\\atomic_util.h",
+    "SHA256": "808b86e880af1c0c71886830be217275dd4d33b35136d0a8b56331f4d13e7ad5",
+    "FinalSHA256": "808b86e880af1c0c71886830be217275dd4d33b35136d0a8b56331f4d13e7ad5"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\verification\\build_expected.py",
+    "Destination": "docs\\oled-previews\\verification\\build_expected.py",
+    "SHA256": "69994c8c6d01d49ca3f18b939b2c1d30313cdf080b862425f46533fa91ef8f52",
+    "FinalSHA256": "69994c8c6d01d49ca3f18b939b2c1d30313cdf080b862425f46533fa91ef8f52"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\verification\\compression_analysis.py",
+    "Destination": "archive\\firmware\\wired-corne\\2026-10-18\\analysis\\compression_analysis.py",
+    "SHA256": "bcfcef8e7b72a785209f0f8f8613da5ccf42e177db96c1e2d79a06296ff4277a",
+    "FinalSHA256": "fb5ec3f6137497cd278afff96f5a8b1e38257e75cca8573c392ba2c5720013ab"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\verification\\luna_expected.h",
+    "Destination": "docs\\oled-previews\\verification\\luna_expected.h",
+    "SHA256": "2549af825b5533a04a3053e187b4dfa6a822ea0cea95a9a51d54c31222cca531",
+    "FinalSHA256": "2549af825b5533a04a3053e187b4dfa6a822ea0cea95a9a51d54c31222cca531"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\verification\\lz_analysis.py",
+    "Destination": "archive\\firmware\\wired-corne\\2026-10-18\\analysis\\lz_analysis.py",
+    "SHA256": "155322f33e43a74eb03f340474b2bc7634ef2725c08eee70744706c4e0b46e38",
+    "FinalSHA256": "e9f9cbffcc7fc5f7057cabfd94be797669d546fbb3103b2c841e604b4f265783"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\verification\\oled_host_test.c",
+    "Destination": "docs\\oled-previews\\verification\\oled_host_test.c",
+    "SHA256": "afc1f6ad1bd7b9aa5e09242aa1ad00e006157415e3aa8ac7b6d32551135fe102",
+    "FinalSHA256": "0f5e27ce8ab8ae1bbfd9b242f4b7a5820cab44990b6deaaa3cc9a509336c96d5"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\verification\\oled_host_test.exe",
+    "Destination": "docs\\oled-previews\\verification\\oled_host_test.exe",
+    "SHA256": "cc6c488bc3a7c64130465e82c7148722e95ed9865a0ed674038b080d70ef3bc6",
+    "FinalSHA256": "181e1425d3941785dfd45c0b6451ec01ec64ccb5c7200e507ece7d94faa4c775"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\verification\\README.md",
+    "Destination": "docs\\oled-previews\\verification\\README.md",
+    "SHA256": "d3b1cb81cdcd824cce438213d8c1d651ae37767be666cc3f9e9aa480f594b1d2",
+    "FinalSHA256": "9000eba129328d42600d6d4edf872d543d85be3045c145f3374a7564d9b82252"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\verification\\run-host-test.ps1",
+    "Destination": "docs\\oled-previews\\verification\\run-host-test.ps1",
+    "SHA256": "1cf9b50cad85dde6aeceb7a6f55af8596f36c25a4a6212b94f6dc69f9048c164",
+    "FinalSHA256": "1cf9b50cad85dde6aeceb7a6f55af8596f36c25a4a6212b94f6dc69f9048c164"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\verification\\transactions.h",
+    "Destination": "docs\\oled-previews\\verification\\transactions.h",
+    "SHA256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+    "FinalSHA256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+  },
+  {
+    "Original": "firmware-out\\oled-previews\\verification\\wpm.h",
+    "Destination": "docs\\oled-previews\\verification\\wpm.h",
+    "SHA256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+    "FinalSHA256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+  },
+  {
+    "Original": "firmware-out\\crkbd_rev1_keebv2_v4-1_oled-luna-cards-orientation-fix.elf",
+    "Destination": "docs\\builds\\wired-corne\\2026-10-18\\crkbd_rev1_keebv2_v4-1_oled-luna-cards-orientation-fix.elf",
+    "SHA256": "ac551297d29cfbc56be7d70c58ed573c1a203ed4738f927b53521258e3b11833",
+    "FinalSHA256": "ac551297d29cfbc56be7d70c58ed573c1a203ed4738f927b53521258e3b11833"
+  },
+  {
+    "Original": "firmware-out\\crkbd_rev1_keebv2_v4-1_oled-luna-cards-orientation-fix.sha256",
+    "Destination": "docs\\builds\\wired-corne\\2026-10-18\\crkbd_rev1_keebv2_v4-1_oled-luna-cards-orientation-fix.sha256",
+    "SHA256": "6a8c431f504830e06150b7272e376ae98e271035a94b8438cd3978003d104959",
+    "FinalSHA256": "6a8c431f504830e06150b7272e376ae98e271035a94b8438cd3978003d104959"
+  },
+  {
+    "Original": "firmware-out\\crkbd_rev1_keebv2_v4-1_oled-luna-cards.elf",
+    "Destination": "docs\\builds\\wired-corne\\2026-10-18\\crkbd_rev1_keebv2_v4-1_oled-luna-cards.elf",
+    "SHA256": "b52450a34c71bac565ec1e13c65259259d19219991ca341042405cd057509d54",
+    "FinalSHA256": "b52450a34c71bac565ec1e13c65259259d19219991ca341042405cd057509d54"
+  },
+  {
+    "Original": "firmware-out\\crkbd_rev1_keebv2_v4-1_oled-luna-cards.hex",
+    "Destination": "archive\\firmware\\wired-corne\\2026-10-18\\crkbd_rev1_keebv2_v4-1_oled-luna-cards.hex",
+    "SHA256": "c3578e93cd0218758c4fd93562491f8ede0e84f23f1e8d65943ddce2b107d3d6",
+    "FinalSHA256": "c3578e93cd0218758c4fd93562491f8ede0e84f23f1e8d65943ddce2b107d3d6"
+  },
+  {
+    "Original": "firmware-out\\crkbd_rev1_keebv2_v4-1_oled-luna-cards.sha256",
+    "Destination": "docs\\builds\\wired-corne\\2026-10-18\\crkbd_rev1_keebv2_v4-1_oled-luna-cards.sha256",
+    "SHA256": "6eb7b202fbe421488b73bdcee33cc5e8bc9be4e0da9ff052370aa0d7974c02e3",
+    "FinalSHA256": "6eb7b202fbe421488b73bdcee33cc5e8bc9be4e0da9ff052370aa0d7974c02e3"
+  },
+  {
+    "Original": "firmware-out\\crkbd_rev1_keebv2_v4-1.hex",
+    "Destination": "firmware-out\\crkbd_rev1_keebv2_v4-1.hex",
+    "SHA256": "15f02ab501be0901feea7186fff1e0844a71e420e5f610d04f336a19ae5a81d7",
+    "FinalSHA256": "15f02ab501be0901feea7186fff1e0844a71e420e5f610d04f336a19ae5a81d7",
+    "CleanupMoveReversed": true
+  },
+  {
+    "Original": "firmware-out\\FLASH-WIRED-CORNE.md",
+    "Destination": "firmware-out\\FLASH-WIRED-CORNE.md",
+    "SHA256": "258fb89860f464fcc045e28ebb28377bc31cad6d2718db49621e38b365722c52",
+    "FinalSHA256": "570e9df92c9bb3c46c0e399061676a623dd9faf2c6c21cf7480a4d457a3f7a83",
+    "CleanupMoveReversed": true
+  },
+  {
+    "Original": "firmware-out\\hpd-v2-top-down-2026-10-18.jpg",
+    "Destination": "firmware-out\\hpd-v2-top-down-2026-10-18.jpg",
+    "SHA256": "f5fd2f37b222ed6898a833432a2c5b9ced9930e9c17cff55038e3db9f7b5b3d2",
+    "FinalSHA256": "f5fd2f37b222ed6898a833432a2c5b9ced9930e9c17cff55038e3db9f7b5b3d2",
+    "CleanupMoveReversed": true
+  },
+  {
+    "Original": "firmware-out\\oled-build-final.log",
+    "Destination": "docs\\builds\\wired-corne\\2026-10-18\\oled-build-final.log",
+    "SHA256": "a2f7ac3b9a042ccbafd96c9438bdc24a33b820e482bc63c6809d6b94c39ad4fc",
+    "FinalSHA256": "a2f7ac3b9a042ccbafd96c9438bdc24a33b820e482bc63c6809d6b94c39ad4fc"
+  },
+  {
+    "Original": "firmware-out\\oled-build-orientation-fix.log",
+    "Destination": "docs\\builds\\wired-corne\\2026-10-18\\oled-build-orientation-fix.log",
+    "SHA256": "9bcd148b11ce5dcf341130e31ba65579e60952b4eab54abecae7070252973f06",
+    "FinalSHA256": "9bcd148b11ce5dcf341130e31ba65579e60952b4eab54abecae7070252973f06"
+  },
+  {
+    "Original": "firmware-out\\oled-build.log",
+    "Destination": "docs\\builds\\wired-corne\\2026-10-18\\oled-build.log",
+    "SHA256": "c15a108a74ab5b3984a88f9bb508e869ad1e312e96ebdef0ede4e2a2383a2a8a",
+    "FinalSHA256": "a4ddbc2cb75e56d9d8681d65b85bea5cff7082b69ed3f1b450a83e7508984e0e"
+  },
+  {
+    "Original": "firmware-out\\OLED-FIRMWARE-BUILD.md",
+    "Destination": "docs\\OLED-FIRMWARE-BUILD.md",
+    "SHA256": "3c97924a8dbf5a686f5c19ba485b82b6339db703697ea222b335fab63d45c014",
+    "FinalSHA256": "bdcf9b012f38451ff66fb8bc0b7112a8e4d8bfe6471d89fc5d8a0900c5e5391c"
+  },
+  {
+    "Original": "firmware-out\\oled-firmware-manifest.json",
+    "Destination": "docs\\builds\\wired-corne\\2026-10-18\\oled-firmware-manifest.json",
+    "SHA256": "04db71fab3e568adaa704f3879ecae5841e3e941548817e9c55583ff26b0d759",
+    "FinalSHA256": "04db71fab3e568adaa704f3879ecae5841e3e941548817e9c55583ff26b0d759"
+  },
+  {
+    "Original": "firmware-out\\oled-firmware-orientation-fix-manifest.json",
+    "Destination": "docs\\builds\\wired-corne\\2026-10-18\\oled-firmware-orientation-fix-manifest.json",
+    "SHA256": "bc1987a94120007faf8acd3422aa24017ef48c627ec7e0be31e89bdbdc6b4133",
+    "FinalSHA256": "bc1987a94120007faf8acd3422aa24017ef48c627ec7e0be31e89bdbdc6b4133"
+  },
+  {
+    "Original": "firmware-out\\OLED-GRAPHICS-OPTIONS.md",
+    "Destination": "firmware-out\\OLED-GRAPHICS-OPTIONS.md",
+    "SHA256": "e1b1f8fabf6b9405cb2ff01166eab646f320b4c50c68b7443ff2080828048159",
+    "FinalSHA256": "e1b1f8fabf6b9405cb2ff01166eab646f320b4c50c68b7443ff2080828048159",
+    "CleanupMoveReversed": true
+  },
+  {
+    "Original": "firmware-out\\oled-host-verification-orientation-fix.log",
+    "Destination": "docs\\builds\\wired-corne\\2026-10-18\\oled-host-verification-orientation-fix.log",
+    "SHA256": "05c5914605b4868a9f446cc63ee8d0363e6dbe04e593b9eb924ca868e437b370",
+    "FinalSHA256": "05c5914605b4868a9f446cc63ee8d0363e6dbe04e593b9eb924ca868e437b370"
+  },
+  {
+    "Original": "firmware-out\\oled-host-verification.log",
+    "Destination": "docs\\builds\\wired-corne\\2026-10-18\\oled-host-verification.log",
+    "SHA256": "05c5914605b4868a9f446cc63ee8d0363e6dbe04e593b9eb924ca868e437b370",
+    "FinalSHA256": "05c5914605b4868a9f446cc63ee8d0363e6dbe04e593b9eb924ca868e437b370"
+  }
+]

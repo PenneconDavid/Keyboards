@@ -1,0 +1,32 @@
+{
+  "date_local": "2026-10-17",
+  "target": "crkbd/rev1",
+  "keymap": "keebv2",
+  "mcu": "ATmega32U4",
+  "bootloader": "Caterina",
+  "same_hex_both_halves": true,
+  "flash_bytes": 28400,
+  "flash_limit_bytes": 28672,
+  "flash_free_bytes": 272,
+  "sram_static_bytes": 1916,
+  "sram_total_bytes": 2560,
+  "sram_remaining_for_stack_bytes": 644,
+  "compiler": "avr-gcc 15.1.0",
+  "source_git_commit": "b9c14db50261f3ccff4f069f627b0ba5364fa2eb",
+  "source_has_uncommitted_changes": true,
+  "source_sha256": {
+    "keymap.c": "b0dd1f673bc61055d28b15b85d3a70038d3a3f8f8933d18f18f50aac64f3608e",
+    "config.h": "279cc65274a3d5bd0e3de415c3f7ed36d3e275de476d7372986efdc2054157b0",
+    "rules.mk": "6698a3f6b2b288912d03e655e655f24a36e4caa35d6ad8b8c5938dd686c2b9af",
+    "oled_graphics.h": "e925386cc227fc90dcb3fce0ad81ebf639cacfeae5f966177d0f27143be88f94",
+    "oled_assets.h": "dc43fd07192825560102fba687d8cfc6490f23328762ea5ff3fe88aca5d7119d"
+  },
+  "artifacts_sha256": {
+    "crkbd_rev1_keebv2_v4-1_oled-luna-cards.hex": "c3578e93cd0218758c4fd93562491f8ede0e84f23f1e8d65943ddce2b107d3d6",
+    "crkbd_rev1_keebv2_v4-1_oled-luna-cards.elf": "b52450a34c71bac565ec1e13c65259259d19219991ca341042405cd057509d54"
+  },
+  "original_v4_1_hex_preserved_sha256": "15f02ab501be0901feea7186fff1e0844a71e420e5f610d04f336a19ae5a81d7",
+  "validation": "BuildOnly exit 0; Intel HEX checksum/address/byte-count validation; independent review; host graphics/state checks passed",
+  "hardware_verified": false,
+  "flashed": false
+}

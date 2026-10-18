@@ -1,0 +1,21 @@
+Copied keebv2 into C:\Users\dseib\qmk_firmware\keyboards\crkbd\keymaps\keebv2
+
+>>> qmk compile -kb crkbd -km keebv2
+
+
+INFO Compiling keymap with make -r -R -f builddefs/build_keyboard.mk -s KEYBOARD=crkbd/rev1 KEYMAP=keebv2 KEYBOARD_FILESAFE=crkbd_rev1 TARGET=crkbd_rev1_keebv2 VERBOSE=false COLOR=true SILENT=false QMK_BIN="qmk"
+avr-gcc.exe (GCC) 15.1.0
+Copyright (C) 2025 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Compiling: quantum/keymap_introspection.c                                                           [32;01m[OK][0m
+Compiling: quantum/via.c                                                                            [32;01m[OK][0m
+Linking: .build/crkbd_rev1_keebv2.elf                                                               [32;01m[OK][0m
+Creating load file for flashing: .build/crkbd_rev1_keebv2.hex                                       [32;01m[OK][0m
+Copying crkbd_rev1_keebv2.hex to qmk_firmware folder                                                [32;01m[OK][0m
+Checking file size of crkbd_rev1_keebv2.hex                                                         [33;01m[WARNINGS][0m
+
+ * The firmware size is approaching the maximum - 28400/28672 (99%, 272 bytes free)
+Built C:\Users\dseib\qmk_firmware\crkbd_rev1_keebv2.hex
+Build completed. Skipping flashing because -BuildOnly was provided.

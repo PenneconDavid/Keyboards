@@ -1,0 +1,34 @@
+{
+  "date_local": "2026-10-18",
+  "target": "crkbd/rev1",
+  "keymap": "keebv2",
+  "mcu": "ATmega32U4",
+  "bootloader": "Caterina",
+  "same_hex_both_halves": true,
+  "flash_bytes": 28374,
+  "flash_limit_bytes": 28672,
+  "flash_free_bytes": 298,
+  "sram_static_bytes": 1916,
+  "sram_total_bytes": 2560,
+  "sram_remaining_for_stack_bytes": 644,
+  "compiler": "avr-gcc 15.1.0",
+  "source_git_commit": "b9c14db50261f3ccff4f069f627b0ba5364fa2eb",
+  "source_has_uncommitted_changes": true,
+  "source_sha256": {
+    "keymap.c": "b0dd1f673bc61055d28b15b85d3a70038d3a3f8f8933d18f18f50aac64f3608e",
+    "config.h": "17d1b467d73cdf077ab489776a6af602953ab599a417d3f427d5f25f07a28106",
+    "rules.mk": "6698a3f6b2b288912d03e655e655f24a36e4caa35d6ad8b8c5938dd686c2b9af",
+    "oled_graphics.h": "e925386cc227fc90dcb3fce0ad81ebf639cacfeae5f966177d0f27143be88f94",
+    "oled_assets.h": "dc43fd07192825560102fba687d8cfc6490f23328762ea5ff3fe88aca5d7119d"
+  },
+  "artifacts_sha256": {
+    "crkbd_rev1_keebv2_v4-1_oled-luna-cards-orientation-fix.hex": "aaa194d120bc077579f3b762ead57bb34b46a3ef7f02e886fad81b841e7271f8",
+    "crkbd_rev1_keebv2_v4-1_oled-luna-cards-orientation-fix.elf": "ac551297d29cfbc56be7d70c58ed573c1a203ed4738f927b53521258e3b11833"
+  },
+  "original_v4_1_hex_preserved_sha256": "15f02ab501be0901feea7186fff1e0844a71e420e5f610d04f336a19ae5a81d7",
+  "validation": "BuildOnly exit 0; Intel HEX checksum/address/byte-count validation; independent review; host graphics/state checks passed",
+  "hardware_verified": false,
+  "flashed": false,
+  "correction": "Only ROT_RIGHT changes 270 to 90; effective right rotation changes 90 to 270. Left unchanged.",
+  "hardware_feedback": "User reports previous firmware looks good except Luna upside down at north end. Corrected orientation not yet confirmed on hardware."
+}

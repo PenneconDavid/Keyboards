@@ -1,5 +1,6 @@
 VIA_ENABLE = yes
 OLED_ENABLE = yes
+WPM_ENABLE = yes         # Luna's walk/run speed; sent to the right by KEEB_PET_STATE
 COMBO_ENABLE = yes        # game exit: left Esc + right Esc
 TAP_DANCE_ENABLE = yes    # Shift / Caps Lock on the home-row pinky
 SPACE_CADET_ENABLE = no   # no longer used by the layout

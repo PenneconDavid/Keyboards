@@ -4,9 +4,11 @@
 #define SOFT_SERIAL_PIN D2
 #define MASTER_LEFT
 #define SPLIT_OLED_ENABLE
+#define SPLIT_ACTIVITY_ENABLE
+#define SPLIT_TRANSACTION_IDS_USER KEEB_PET_STATE
 
 // Flash budget (ATmega32U4, 28 KiB usable): the 7-layer map with VIA, combos, tap dance, per-key
-// RGB and the OLED animations only fits with these invisible trims (see also rules.mk).
+// RGB and OLED graphics use these invisible trims (see also rules.mk).
 #define LAYER_STATE_8BIT      // 7 layers fit in 8 bits; smaller layer code throughout
 #define NO_ACTION_ONESHOT     // no one-shot keys in this layout
 
@@ -41,7 +43,6 @@
 
 #    define RGB_MATRIX_SLEEP
 #    define RGB_MATRIX_TIMEOUT 600000  // 10 minutes inactivity -> off
-#    define SPLIT_ACTIVITY_ENABLE
 #endif
 
 // ----------------------- User-tunable defaults -----------------------
@@ -51,15 +52,15 @@
 
 // Portrait rotation added on top of what crkbd.c hands oled_init_user() (0 on the left/master,
 // 180 on the right/slave, which already corrects the right OLED's upside-down mounting).
-// Left: 270 + 0 = 270 (the same picture the left showed before: 90 + a software flip).
-// Right: 270 + 180 = 90, i.e. the opposite of the old build, which is the fix.
-// If BOTH halves come up upside-down, set both to 90. If only one does, flip that side below.
+// Left: 270 + 0 = 270. Hardware feedback on 2026-10-18 confirmed the left cards are correct,
+// but Luna on the right was upside-down and at the north end with the old 270 offset.
+// Right: 90 + 180 = 270 now flips that display 180 degrees, including sprite placement.
 #ifndef ROT_LEFT
 #    define ROT_LEFT 270
 #endif
 
 #ifndef ROT_RIGHT
-#    define ROT_RIGHT 270
+#    define ROT_RIGHT 90
 #endif
 
 // Per-side 180-degree software flip of the drawn picture (last-resort knob, see ROT_* above).

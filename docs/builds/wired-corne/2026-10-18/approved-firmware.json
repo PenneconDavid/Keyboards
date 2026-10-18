@@ -1,0 +1,12 @@
+{
+  "date_local": "2026-10-18",
+  "status": "user-tested-and-approved",
+  "user_confirmation": "Thanks this looks good now.",
+  "firmware": "firmware-out\\crkbd_rev1_keebv2_v4-1_oled-luna-cards-orientation-fix.hex",
+  "sha256": "aaa194d120bc077579f3b762ead57bb34b46a3ef7f02e886fad81b841e7271f8",
+  "same_hex_both_halves": true,
+  "flash_bytes": 28374,
+  "application_limit_bytes": 28672,
+  "relocation_changed_firmware_bytes": false,
+  "instructions": "firmware-out/FLASH-WIRED-CORNE.md"
+}

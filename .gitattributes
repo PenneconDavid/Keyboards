@@ -1,0 +1,7 @@
+# Preserve the exact bytes recorded in firmware/build provenance hashes.
+/keyboards/crkbd/keymaps/keebv2/*.c -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/keyboards/crkbd/keymaps/keebv2/*.h -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/keyboards/crkbd/keymaps/keebv2/rules.mk -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/firmware-out/*.hex -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/archive/firmware/**/*.hex -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/docs/oled-previews/sources/*.c -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

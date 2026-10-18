@@ -1,0 +1,19 @@
+{
+  "bongo_array_bytes": {
+    "idle": 2560,
+    "prep": 512,
+    "tap": 1024
+  },
+  "luna_bytes_per_pose": {
+    "sit": 192,
+    "walk": 192,
+    "run": 192,
+    "bark": 192,
+    "sneak": 192
+  },
+  "font_bytes": 1344,
+  "sources": {
+    "bongo.c": "eec749dc7de851c819afb2eec49037dc044e5ee5381bc7ba5e43753eda3f657d",
+    "luna.c": "71d56482f8fbe0e7a59c3f81c27b1e915af2ba93f1efdda7d39844ed4b6f5975"
+  }
+}
