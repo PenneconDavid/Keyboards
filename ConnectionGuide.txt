@@ -2,22 +2,24 @@
 
 ## QMK — wired Corne (crkbd / keebv2)
 
+- **Board:** Keebmaker Corne 42-key, ATmega32U4 Pro Micro (Caterina). Build target `crkbd` = `crkbd/rev1`. Not `rev4_1`.
 - **Userspace keymap:** `keyboards/crkbd/keymaps/keebv2/`
 - **Build tree:** `$env:USERPROFILE\qmk_firmware` (override with `scripts/flash-keebv2.ps1 -QmkPath`)
-- **Compile:** `qmk compile -kb crkbd -km keebv2` (flash script copies the userspace keymap first)
-- **Flash (Pro Micro / ATmega32U4):** avrdude `avr109`, left default `COM5`, right default `COM6` (confirm in Device Manager; ports move)
-- **Remap:** VIA over USB HID. Live snapshot: `layouts/via/crkbd.layout.2026-05-10.json`
-- **Not wireless.** Soft serial on D2, `MASTER_LEFT`, TRRS.
+- **Compile:** `qmk compile -kb crkbd -km keebv2` (flash script copies the userspace keymap first). Output: `~\qmk_firmware\crkbd_rev1_keebv2.hex`, one file for both halves.
+- **QMK MSYS from PowerShell:** set `MSYSTEM=MINGW64`, `SHELL=C:\Program Files\QMK_MSYS\usr\bin\bash.exe`, prepend `C:\Program Files\QMK_MSYS\mingw64\bin` to PATH (the script does this).
+- **Flash (avrdude / avr109):** double-tap reset, a Caterina COM port appears for ~8 s. `qmk flash -kb crkbd -km keebv2 -bl avrdude` detects it; `-P COMn` to force a port (ports move; check Device Manager). QMK Toolbox works too (ATmega32U4).
+- **Remap:** VIA over USB HID (https://usevia.app). Last snapshot: `layouts/via/crkbd.layout.2026-05-10.json` (pre-v4.1). Export a dated file after every flash.
+- **Not wireless.** Soft serial on D2, `MASTER_LEFT`, `SPLIT_USB_DETECT`, TRRS. USB into the left half.
 
 ## ZMK — wireless boards (other repo)
 
 `C:\Users\dseib\Documents\Projects\ZmkConfig`
 
+- **Layout source of truth:** `config/eyelash_corne.keymap` on `main` (v4.1, 2026-10-17); the wired keebv2 mirrors it.
 - **CI:** GitHub Actions `firmware.zip` UF2s
 - **Flash:** UF2 mass-storage (nice!nano / XIAO `XIAO-SENSE`)
 - **Eyelash rollback:** `ZmkConfig/known-good/eyelash-corne/` (nice!view vs OLED packs)
 - **Sofle rollback:** `known-good/sofle-dongle/` in this repo
-- **Prospector attempt:** `ZmkConfig/profiles/prospector-eyelash/`
 
 ## Vial — Cheapino
 
