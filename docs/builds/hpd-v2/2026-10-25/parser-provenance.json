@@ -1,0 +1,27 @@
+[
+  {
+    "name": "keycodes.py",
+    "sha": "773a641f0e757e3a3e4b6d159a53c2f1560a1af9",
+    "url": "https://github.com/vial-kb/vial-gui/blob/main/src/main/python/keycodes/keycodes.py"
+  },
+  {
+    "name": "keycodes_v5.py",
+    "sha": "a56fa88f14ba151c1a91118298ab38d195a488c1",
+    "url": "https://github.com/vial-kb/vial-gui/blob/main/src/main/python/keycodes/keycodes_v5.py"
+  },
+  {
+    "name": "keycodes_v6.py",
+    "sha": "7111321e962d895497488a929ee0435b7cca8d6d",
+    "url": "https://github.com/vial-kb/vial-gui/blob/main/src/main/python/keycodes/keycodes_v6.py"
+  },
+  {
+    "name": "any_keycode.py",
+    "sha": "127d8e5a0820da93d92cf200dac6ca043810fe18",
+    "url": "https://github.com/vial-kb/vial-gui/blob/main/src/main/python/any_keycode.py"
+  },
+  {
+    "name": "simpleeval.py",
+    "sha": "19d8fed848124bbba863341f1bb801d4fc1c011f",
+    "url": "https://github.com/danthedeckie/simpleeval/blob/main/simpleeval.py"
+  }
+]

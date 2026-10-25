@@ -24,3 +24,12 @@
 ## Vial — Cheapino
 
 - **Binary:** `known-good/cheapino/cheapino_vial.uf2`
+
+## QMK/Vial — HPD v2 PC/TV v3 (encoder left / trackball right)
+
+- **Approved mapping:** 2026-10-25; dark diagrams in `firmware-out/hpd-v2/review/proposal-v3/`.
+- **Target:** `ergohaven/hpd/rev2`, keymap `pc_tv_v3`, RP2040 UF2. Actual connected device identity/backup still pending.
+- **Canonical source:** `keyboards/ergohaven/hpd/keymaps/pc_tv_v3/`.
+- **Build only:** `scripts/build-hpd-v2.ps1`; isolated pinned Ergohaven checkout under `.build/hpd-v2/vial-qmk/`.
+- **Outputs/status:** `firmware-out/hpd-v2/pc-tv-v3/`; follow its README and manifest. No flashing performed.
+- **Expected device family:** HPD v2 enc/ball, VID E126 / PID 0051; verify on device before applying. Cheapino and Corne firmware are unrelated.

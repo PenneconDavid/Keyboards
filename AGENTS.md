@@ -36,6 +36,7 @@ No test runner, lint, or web server. Tier 2 browser QA skills do not apply.
 
 ## Conventions
 
+- Keymap review images use dark backgrounds by default (David's preference, 2026-10-25).
 - Userspace keymap lives at `keyboards/crkbd/keymaps/keebv2/`. `scripts/flash-keebv2.ps1` copies it into the local QMK tree. There is no second copy of the keymap in the repo.
 - Ask before modifying keymaps the user has not requested.
 - VIA overrides `keymap.c` after flashing. Latest VIA snapshot: `layouts/via/crkbd.layout.2026-05-10.json` (pre-v4.1, 4 layers). A new dated export belongs in `layouts/via/` after every flash or live edit.

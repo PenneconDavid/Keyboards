@@ -5,3 +5,11 @@
 /firmware-out/*.hex -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 /archive/firmware/**/*.hex -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 /docs/oled-previews/sources/*.c -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# HPD package/source fingerprints must survive Windows checkouts unchanged.
+/keyboards/ergohaven/hpd/keymaps/pc_tv_v3/* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# The vendor Vial definition is kept verbatim, including its comma-line spacing.
+/keyboards/ergohaven/hpd/keymaps/pc_tv_v3/vial.json whitespace=-blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/firmware-out/hpd-v2/pc-tv-v3/* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/firmware-out/hpd-v2/review/proposal-v3/mapping-proposal.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/docs/builds/hpd-v2/2026-10-25/* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
